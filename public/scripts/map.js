@@ -3,28 +3,16 @@ var markersArray = [];
 
 function initializeMap() {
 
-  var sydney = new google.maps.LatLng(-33.420, 148.569);
+  var sydney = new google.maps.LatLng(-33.863093, 151.207731);
   
   var myOptions = {
     center: sydney,
-    zoom: 7,
+    zoom: 15,
 		disableDefaultUI: false,
     mapTypeId: google.maps.MapTypeId.HYBRID
   };
   map = new google.maps.Map(document.getElementById("map_canvas"),
       myOptions);
-			
-  var myOptions = {
-	  getTileUrl: function(coord, zoom) {
-	    return "http://mt3.google.com/mapstt?" +
-	    "zoom=" + zoom + "&x=" + coord.x + "&y=" + coord.y + "&client=api";
-	  },
-	  tileSize: new google.maps.Size(256, 256)
-	};
-  
-	var myMapType = new google.maps.ImageMapType(myOptions);
-	
-	map.overlayMapTypes.insertAt(0, myMapType);
 }
 
 function addMarker(location, image) {	
