@@ -4,6 +4,10 @@
     </head>
 
     <body>
-        visualise data on map
+				<ul>
+					<% for photo in photos %>
+						<li><img src="http://farm<%= photo.farm %>.staticflickr.com/<%= photo.server %>/<%= photo.id %>_<%= photo.secret %>.jpg"></img></li>
+					<% end %>
+				</ul>
     </body>
 </html>
