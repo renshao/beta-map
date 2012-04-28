@@ -2,13 +2,19 @@
 <html>
   <head>
       <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-      <%= css :app, :media => 'screen' %>
+      <%= css :application, :media => 'screen' %>
       <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDDl0u4l76xuStrTo9PJbCurMXMi23kEjk&sensor=false"></script>
-      <%= js :app %>
+      <%= js :application %>
   </head>
   <body>
-    <div id="map_canvas"></div>
+    <div id="mapCanvas"></div>
+    <div id="controlPanel">
+        <form id="searchForm" action="/photos">
+            <div class="row">
+                <input id="keyword" name="keyword"/> <button type="submit">Search</button>
+            </div>
+        </form>
+    </div>
   </body>
 </html>
-
 

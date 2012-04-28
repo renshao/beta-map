@@ -10,12 +10,12 @@ $(document).ready(function() {
 	disableDefaultUI: false,
     mapTypeId: google.maps.MapTypeId.HYBRID
   };
-  map = new google.maps.Map($("#map_canvas").get(0), myOptions);
+  map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
 });
 
-function addMarker(location, image) {	
+function addMarker(lat, lng, image) {	
   marker = new google.maps.Marker({
-    position: location,
+    position: new google.maps.LatLng(lat, lng),
     map: map,
 		icon: image,
 		animation: google.maps.Animation.DROP
