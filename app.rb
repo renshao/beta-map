@@ -16,8 +16,8 @@ class App < Sinatra::Base
     # The second parameter defines where the compressed version will be served.
     # (Note: that parameter is optional, AssetPack will figure it out.)
     js :app, '/js/app.js', [
-      '/js/**.js',
-      '/vendor/**.js'
+      '/vendor/**.js',
+      '/js/**.js'
     ]
 
     css :app, '/css/app.css', [
