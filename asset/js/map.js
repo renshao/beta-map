@@ -13,14 +13,19 @@ $(document).ready(function() {
   map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
 });
 
-function addMarker(lat, lng, image) {	
-  marker = new google.maps.Marker({
-    position: new google.maps.LatLng(lat, lng),
-    map: map,
-		icon: image,
-		animation: google.maps.Animation.DROP
-  });
-  markersArray.push(marker);
+function addMarker(lat, lng, title) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng),
+        map: map,
+          title: title,
+//    		icon: image,
+    		animation: google.maps.Animation.DROP
+      });
+      markersArray.push(marker);
+      google.maps.event.addListener(marker, 'click', function() {
+//          infoWindow.content = '<div id="content">'+ title + '</div>';
+          createInfo(this.title).open(map, marker);
+      });
 }
 
 // Removes the overlays from the map, but keeps them in the array
@@ -50,3 +55,14 @@ function deleteOverlays() {
     markersArray.length = 0;
   }
 }
+
+function createInfo(title) {
+    return new google.maps.InfoWindow({
+        content: '<div id="content">'+ title + '</div>'
+    });
+}
+
+var infoWindow = new google.maps.InfoWindow({
+    content: '<div id="content">none</div>'
+});
+

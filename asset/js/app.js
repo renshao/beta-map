@@ -1,13 +1,12 @@
 $(document).ready(function(){
     $('#searchForm').submit(function(e){
         var $form = $(this);
-        $.ajax({
-            url: $form.attr('action'),
-            data: $form.serialize(),
-            success: function(photos) {
-                addMarker(-33.863093, 151.207731, null);
+
+        $.getJSON($form.attr('action'), $form.serialize(), function(data) {
+            for (var key in data) {
+                addMarker(data[key][0], data[key][1], "");
             }
-        });
+        })
         return false;
     });
 });
