@@ -4,7 +4,7 @@ $(document).ready(function(){
 
         $.getJSON($form.attr('action'), $form.serialize(), function(data) {
             for (var key in data) {
-                addMarker(data[key][0], data[key][1], "");
+                addMarker(data[key][0], data[key][1], key);
             }
         })
         return false;

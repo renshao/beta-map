@@ -13,6 +13,8 @@ $(document).ready(function() {
   map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
 });
 
+var localTitle;
+
 function addMarker(lat, lng, title) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
@@ -21,10 +23,11 @@ function addMarker(lat, lng, title) {
 //    		icon: image,
     		animation: google.maps.Animation.DROP
       });
+
       markersArray.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
 //          infoWindow.content = '<div id="content">'+ title + '</div>';
-          createInfo(this.title).open(map, marker);
+          createInfo(title).open(map, marker);
       });
 }
 
@@ -57,9 +60,12 @@ function deleteOverlays() {
 }
 
 function createInfo(title) {
-    return new google.maps.InfoWindow({
-        content: '<div id="content">'+ title + '</div>'
-    });
+    $('#infoPanel').text (title);
+    $('#infoPanel').show();
+
+//    return new google.maps.InfoWindow({
+//        content: '<div id="content">'+ title + '</div>'
+//    });
 }
 
 var infoWindow = new google.maps.InfoWindow({

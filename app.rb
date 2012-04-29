@@ -49,6 +49,7 @@ class App < Sinatra::Base
       {
          sydney: [-33.863093, 151.207731],
          milsonsPoint: [-33.823093, 151.207731]
+
       }.to_json
   end
 
