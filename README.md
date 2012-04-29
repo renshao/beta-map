@@ -1,20 +1,20 @@
 Live URL
 --------
-http://floating-ice-4900.heroku.com
+http://floating-ice-4900.heroku.com/map
 
 
 Environments
 ------------
-1. Install rvm, ruby 1.9.3, create gemset raffe
+Install rvm, ruby 1.9.3, create gemset beta-map
 
-2. Run bundle to install gems
+Run bundle to install gems
 
-    $ rvm 1.9.3@raffe
+    $ rvm 1.9.3@beta-map
 
     $ bundle
 
-3. Start app using shotgun (auto redeploy after code change)
+Start app using shotgun (auto redeploy after code change)
   
     $ shotgun
 
-4. Open http://localhost:9393
+Open http://localhost:9393
