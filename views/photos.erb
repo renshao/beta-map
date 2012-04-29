@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <%= css :application, :media => 'screen' %>
+        <%= js :application %>
+    </head>
+
+    <body>
+        <ul>
+            <% photos.each do |photo| %>
+                <li>
+                    <img src="http://farm<%= photo.farm %>.staticflickr.com/<%= photo.server %>/<%= photo.id %>_<%= photo.secret %>.jpg"/>
+                </li>
+            <% end %>
+        </ul>
+    </body>
+</html>

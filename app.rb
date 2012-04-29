@@ -1,10 +1,17 @@
 require 'sinatra'
 require 'erb'
 require 'json'
+require 'flickraw'
 
 require 'sinatra/assetpack'
 
+FlickRaw.api_key="665020df0e5ace2a2efbd8a6f5ad1f55"
+FlickRaw.shared_secret="d57c75447d843c9b"
+
 class App < Sinatra::Base
+  LAT_DEFAULT = '-33.863093'
+  LON_DEFAULT = '151.207731'
+
   set :root, File.dirname(__FILE__)
   register Sinatra::AssetPack
 
@@ -40,6 +47,21 @@ class App < Sinatra::Base
   get '/photos' do
       content_type :json
       {}.to_json
+  end
+
+  get '/flickr' do
+    photos = flickr.photos.search populate_search_params
+    erb :photos, :locals => {:photos => photos}
+  end
+
+  def populate_search_params
+    lat = params[:lat] ? params[:lat] : LAT_DEFAULT
+    lon = params[:lon] ? params[:lon] : LON_DEFAULT
+
+    search_params = {:text => params[:q], :lat => lat, :lon => lon, :accuracy => '6', :per_page => '10'}
+    puts "Flickr search params are " + search_params.to_s
+
+    return search_params
   end
 end
 
