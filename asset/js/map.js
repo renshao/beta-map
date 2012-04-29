@@ -1,23 +1,21 @@
 var map;
 var markersArray = [];
 
-function initializeMap() {
-
+$(document).ready(function() {
   var sydney = new google.maps.LatLng(-33.863093, 151.207731);
   
   var myOptions = {
     center: sydney,
     zoom: 15,
-		disableDefaultUI: false,
+	disableDefaultUI: false,
     mapTypeId: google.maps.MapTypeId.HYBRID
   };
-  map = new google.maps.Map(document.getElementById("map_canvas"),
-      myOptions);
-}
+  map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
+});
 
-function addMarker(location, image) {	
+function addMarker(lat, lng, image) {	
   marker = new google.maps.Marker({
-    position: location,
+    position: new google.maps.LatLng(lat, lng),
     map: map,
 		icon: image,
 		animation: google.maps.Animation.DROP

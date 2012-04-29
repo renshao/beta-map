@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'erb'
+require 'json'
 require 'flickraw'
 require 'sinatra/assetpack'
 
@@ -20,12 +21,12 @@ class App < Sinatra::Base
 
     # The second parameter defines where the compressed version will be served.
     # (Note: that parameter is optional, AssetPack will figure it out.)
-    js :app, '/js/app.js', [
-      '/js/**.js',
-      '/vendor/**.js'
+    js :application, [
+      '/vendor/**.js',
+      '/js/**.js'
     ]
-
-    css :app, '/css/app.css', [
+    
+    css :application, '/css/app.css', [
       '/css/*.css'
     ]
 
@@ -44,5 +45,10 @@ class App < Sinatra::Base
 
   get '/map' do
       erb :map
+  end
+
+  get '/photos' do
+      content_type :json
+      {}.to_json
   end
 end
