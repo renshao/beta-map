@@ -5,6 +5,8 @@ require 'flickraw'
 
 require 'sinatra/assetpack'
 
+require './photo_manager'
+
 FlickRaw.api_key="665020df0e5ace2a2efbd8a6f5ad1f55"
 FlickRaw.shared_secret="d57c75447d843c9b"
 
@@ -46,11 +48,8 @@ class App < Sinatra::Base
 
   get '/photos' do
       content_type :json
-      {
-         sydney: [-33.863093, 151.207731],
-         milsonsPoint: [-33.823093, 151.207731]
-
-      }.to_json
+      photos = PhotoManager.new.photos
+      photos.to_json
   end
 
   get '/flickr' do

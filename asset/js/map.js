@@ -16,7 +16,7 @@ $(document).ready(function() {
 var localTitle;
 
 function addMarker(lat, lng, title) {
-      marker = new google.maps.Marker({
+      var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
         map: map,
           title: title,
@@ -63,12 +63,8 @@ function createInfo(title) {
     $('#infoPanel').text (title);
     $('#infoPanel').show();
 
-//    return new google.maps.InfoWindow({
-//        content: '<div id="content">'+ title + '</div>'
-//    });
+    return new google.maps.InfoWindow({
+        content: '<div id="content">'+ title + '</div>'
+    });
 }
-
-var infoWindow = new google.maps.InfoWindow({
-    content: '<div id="content">none</div>'
-});
 
