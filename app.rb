@@ -48,8 +48,16 @@ class App < Sinatra::Base
 
   get '/photos' do
       content_type :json
-      photos = PhotoManager.new.photos
-      photos.to_json
+      photos = flickr.photos.search populate_search_params
+      # photos = PhotoManager.new.photos photos
+      
+      result = []
+      photos.each do |photo|
+        info = flickr.photos.geo.getLocation :photo_id => photo.id
+        url = "http://farm#{photo.farm}.staticflickr.com/#{photo.server}/#{photo.id}_#{photo.secret}.jpg"
+        result << Photo.new(photo.title, info.location.latitude, info.location.longitude, url)
+      end
+      result.to_json
   end
 
   get '/flickr' do
