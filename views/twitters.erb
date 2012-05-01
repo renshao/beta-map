@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <%= css :application, :media => 'screen' %>
+      <%= js :application %>
+  </head>
+  <body>
+    <div id="twitters">
+        <ul>
+            <% twitters.each do |twitter| %>
+                <li><%= twitter.text %></li>
+            <% end %>
+        </ul>
+    </div>
+  </body>
+</html>
