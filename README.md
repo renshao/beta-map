@@ -2,7 +2,6 @@ Live URL
 --------
 http://floating-ice-4900.heroku.com/map
 
-
 Environments
 ------------
 Install rvm, ruby 1.9.3, create gemset beta-map
