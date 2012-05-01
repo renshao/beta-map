@@ -63,7 +63,7 @@ class App < Sinatra::Base
     lat = params[:lat] ? params[:lat] : LAT_DEFAULT
     lon = params[:lon] ? params[:lon] : LON_DEFAULT
 
-    search_params = {:text => params[:q], :lat => lat, :lon => lon, :accuracy => '6', :per_page => '20', :extras => "geo"}
+    search_params = {:text => params[:keyword], :lat => lat, :lon => lon, :accuracy => '6', :per_page => '20', :extras => "geo"}
     puts "Flickr search params are " + search_params.to_s
 
     return search_params

@@ -1,5 +1,6 @@
 $(document).ready(function(){
     $('#searchForm').submit(function(e){
+				deleteOverlays();
         var $form = $(this);
 
         $.getJSON($form.attr('action'), $form.serialize(), function(photos) {
