@@ -5,7 +5,7 @@ $(document).ready(function(){
       center: sydney,
       zoom: 15,
 	  disableDefaultUI: false,
-      mapTypeId: google.maps.MapTypeId.HYBRID
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
     
