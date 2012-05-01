@@ -49,14 +49,8 @@ class App < Sinatra::Base
   get '/photos' do
       content_type :json
       photos = flickr.photos.search populate_search_params
-      # photos = PhotoManager.new.photos photos
+      result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, url) }
       
-      result = []
-      photos.each do |photo|
-        info = flickr.photos.geo.getLocation :photo_id => photo.id
-        url = "http://farm#{photo.farm}.staticflickr.com/#{photo.server}/#{photo.id}_#{photo.secret}.jpg"
-        result << Photo.new(photo.title, info.location.latitude, info.location.longitude, url)
-      end
       result.to_json
   end
 
@@ -69,7 +63,7 @@ class App < Sinatra::Base
     lat = params[:lat] ? params[:lat] : LAT_DEFAULT
     lon = params[:lon] ? params[:lon] : LON_DEFAULT
 
-    search_params = {:text => params[:q], :lat => lat, :lon => lon, :accuracy => '6', :per_page => '20'}
+    search_params = {:text => params[:q], :lat => lat, :lon => lon, :accuracy => '6', :per_page => '20', :extras => "geo"}
     puts "Flickr search params are " + search_params.to_s
 
     return search_params
