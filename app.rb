@@ -60,10 +60,15 @@ class App < Sinatra::Base
   end
 
   def populate_search_params
-    lat = params[:lat] ? params[:lat] : LAT_DEFAULT
-    lon = params[:lon] ? params[:lon] : LON_DEFAULT
+    puts params.inspect
+    lat      = params[:lat] ? params[:lat] : LAT_DEFAULT
+    lon      = params[:lon] ? params[:lon] : LON_DEFAULT
+    accuracy = params[:accuracy] ? 20 - params[:accuracy].to_i : 6
 
-    search_params = {:text => params[:keyword], :lat => lat, :lon => lon, :accuracy => '6', :per_page => '20', :extras => "geo"}
+    puts "LAT: #{lat}"
+    puts "LON: #{lon}"
+
+    search_params = {:text => params[:keyword], :lat => lat, :lon => lon, :accuracy => accuracy, :per_page => '20', :extras => "geo"}
     puts "Flickr search params are " + search_params.to_s
 
     return search_params

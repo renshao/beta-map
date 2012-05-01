@@ -6,7 +6,7 @@ class Photo
         @lat = lat
         @lng = lng
         @url = url
-        puts "New photo: #{name} => #{url}"
+        # puts "New photo: #{name} => #{url}"
     end
 
     def to_json(*a)
