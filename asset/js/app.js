@@ -26,7 +26,7 @@ $(document).ready(function(){
 
 function loadPhotos() {
     $.ajax({
-        url: '/photos',
+        url: '/photos_dev',
 				data: {keyword: $('#keyword').val(), lat: map.getCenter().lat(), lon: map.getCenter().lng(), accuracy: map.getZoom()},
         success: function(photos) {
 						deleteOverlays();

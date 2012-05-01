@@ -53,6 +53,13 @@ class App < Sinatra::Base
       
       result.to_json
   end
+  
+  get '/photos_dev' do
+    content_type :json
+    puts "!----------WARNING! IN DEV MODE!----------!"
+    puts "!----------WARNING! IN DEV MODE!----------!"
+    "[{\"name\":\"017 Guissipepe from Italy\",\"lat\":-33.86115,\"lng\":151.209383,\"url\":\"http://farm8.staticflickr.com/7201/7130761905_600d6b2be1_t.jpg\"},{\"name\":\"Martin Place, Sydney\",\"lat\":-33.866638,\"lng\":151.207923,\"url\":\"http://farm8.staticflickr.com/7228/6983746814_e6e38770d0_t.jpg\"}]"
+  end
 
   get '/flickr' do
     photos = flickr.photos.search populate_search_params
