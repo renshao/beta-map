@@ -1,24 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-      <%= css :application, :media => 'screen' %>
-      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDDl0u4l76xuStrTo9PJbCurMXMi23kEjk&sensor=false"></script>
-      <%= js :application %>
-  </head>
-  <body>
-    <div id="mapCanvas"></div>
-    <div id="controlPanel">
-        <form id="searchForm" action="photos_dev">
-            <div class="row">
-                <input id="keyword" name="keyword"/> <button type="submit" class="right">Search</button>
-            </div>
-        </form>
-    </div>
-    <div id="infoPanel">
-            <div id="infoTitle"></div>
-            <div class='mediumImage'><img id="infoImage"/></div>
-    </div>
-  </body>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<%= css :application, :media => 'screen' %>
+		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>-->
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyDDl0u4l76xuStrTo9PJbCurMXMi23kEjk"></script>
+		<%= js :application %>
+	</head>
+	<body>
+		<div id="mapCanvas"></div>
+		<div id="controlPanel">
+			<form id="searchForm" action="photos_dev">
+				<div class="row">
+					<input id="keyword" name="keyword"/>
+					<button type="submit" class="right">
+						Search
+					</button>
+				</div>
+			</form>
+			<div class="row">
+				Find Places:
+				<input type="text" id="address"/>
+				<input type="button" value="Go" onclick="geocode()">
+				<input type="button" value="Add Marker at Center" onclick="addMarkerAtCenter()"/>
+			</div>
+		</div>
+		<div id="infoPanel">
+			<div id="infoTitle"></div>
+			<div class='mediumImage'><img id="infoImage"/>
+			</div>
+			<div class='userPhoto'>
+				<a class="userPhoto" href="photo/{username}">Search for more photos by this user</a>
+			</div>
+		</div>
+
+		<table>
+			<tr>
+				<td>Lat/Lng:</td><td><div id="latlng"></div></td>
+			</tr>
+			<tr>
+				<td>Address:</td><td><div id="formatedAddress"></div></td>
+			</tr>
+			<tr>
+				<td>Zoom Level</td>
+				<td><div id="zoom_level"></div></td>
+			</tr>
+		</table>
+	</body>
 </html>
 

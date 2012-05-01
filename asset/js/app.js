@@ -1,28 +1,194 @@
-$(document).ready(function(){
-	  var sydney = new google.maps.LatLng(-33.863093, 151.207731);
-    
-    var myOptions = {
-      center: sydney,
-      zoom: 15,
-	  disableDefaultUI: false,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
-    
-	  google.maps.event.addListener(map, 'dragend', function() {
-	        window.setTimeout(function() {
-	  				loadPhotos();
-	        }, 1000);
-	  });
-	
-    $('#searchForm').submit(function(e){
-        loadPhotos();
 
-        return false;
-    });
+var map;
+var markersArray = [];
 
-    loadPhotos();
-});
+var geocoder;
+var centerChangedLast;
+var reverseGeocodedLast;
+var currentReverseGeocodeResponse;
+
+$(document).ready(function() {
+	var sydney = new google.maps.LatLng(-33.863093, 151.207731);
+
+	var myOptions = {
+		center : sydney,
+		zoom : 15,
+		disableDefaultUI : false,
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+	map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
+
+	google.maps.event.addListener(map, 'dragend', function() {
+		window.setTimeout(function() {
+			loadPhotos();
+		}, 1000);
+	});
+
+	$('#searchForm').submit(function(e) {
+		loadPhotos();
+
+		return false;
+	});
+
+	geocoder = new google.maps.Geocoder();
+
+	setupEvents();
+	centerChanged();
+
+	$("#zoom_level").get(0).innerHTML = map.getZoom();
+
+	var input = $("#address").get(0);
+	var autocomplete = new google.maps.places.Autocomplete(input);
+
+	autocomplete.bindTo('bounds', map);
+
+	var infoWindow = new google.maps.InfoWindow();
+
+	var marker = new google.maps.Marker({
+		map : map
+	});
+
+	google.maps.event.addListener(autocomplete, 'place_changed', function() {
+		infoWindow.close();
+		var place = autocomplete.getPlace();
+		if(place.geometry.viewport) {
+			map.fitBounds(place.geometry.viewport);
+		} else {
+			map.setCenter(place.geometry.location);
+			map.setZoom(17);
+			// Why 17? Because it looks good.
+		}
+
+		var image = new google.maps.MarkerImage(place.icon, new google.maps.Size(71, 71), new google.maps.Point(0, 0), new google.maps.Point(17, 34), new google.maps.Size(35, 35));
+		marker.setIcon(image);
+		marker.setPosition(place.geometry.location);
+
+		animateMarkerInDropStyle(marker);
+		addListenerToInfoWindow(marker, infoWindow);
+
+		var address = '';
+		if(place.address_components) {
+			address = [(place.address_components[0] && place.address_components[0].short_name || ''), (place.address_components[1] && place.address_components[1].short_name || ''), (place.address_components[2] && place.address_components[2].short_name || '')].join(' ');
+		}
+
+		infoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+		infoWindow.open(map, marker);
+
+		loadPhotos();
+	});
+
+	loadPhotos();
+}); 
+
+function setupEvents() {
+	reverseGeocodedLast = new Date();
+	centerChangedLast = new Date();
+
+	setInterval(function() {
+		if((new Date()).getSeconds() - centerChangedLast.getSeconds() > 1) {
+			if(reverseGeocodedLast.getTime() < centerChangedLast.getTime())
+				reverseGeocode();
+		}
+	}, 1000);
+
+	google.maps.event.addListener(map, 'zoom_changed', function() {
+		$("#zoom_level").get(0).innerHTML = map.getZoom();
+	});
+
+	google.maps.event.addListener(map, 'center_changed', centerChanged);
+}
+
+function reverseGeocode() {
+	reverseGeocodedLast = new Date();
+	geocoder.geocode({
+		latLng : map.getCenter()
+	}, reverseGeocodeResult);
+}
+
+function reverseGeocodeResult(results, status) {
+	currentReverseGeocodeResponse = results;
+	if(status == 'OK') {
+		if(results.length == 0) {
+			$("#formatedAddress").get(0).innerHTML = 'None';
+		} else {
+			$("#formatedAddress").get(0).innerHTML = results[0].formatted_address;
+		}
+	} else {
+		$("#formatedAddress").get(0).innerHTML = 'Error';
+	}
+}
+
+function centerChanged() {
+	centerChangedLast = new Date();
+	var latlng = getCenterLatLngText();
+	$("#latlng").get(0).innerHTML = latlng;
+	$("#formatedAddress").get(0).innerHTML = '';
+	currentReverseGeocodeResponse = null;
+}
+
+function getCenterLatLngText() {
+	return '(' + map.getCenter().lat() + ', ' + map.getCenter().lng() + ')';
+}
+
+function geocode() {
+	var address = $("#address").get(0).value;
+	geocoder.geocode({
+		'address' : address,
+		'partialmatch' : true
+	}, geocodeResult);
+}
+
+function geocodeResult(results, status) {
+	if(status == 'OK' && results.length > 0) {
+		map.fitBounds(results[0].geometry.viewport);
+	} else {
+		alert("Geocode was not successful for the following reason: " + status);
+	}
+}
+
+function addMarkerAtCenter() {
+	var text = '<h3>Marker position is:</h3><br>';
+	text = text + 'Lat/Lng: ' + getCenterLatLngText();
+	if(currentReverseGeocodeResponse) {
+		var addr = '';
+		if(currentReverseGeocodeResponse.size == 0) {
+			addr = 'None';
+		} else {
+			addr = currentReverseGeocodeResponse[0].formatted_address;
+		}
+		text = text + '<br>' + 'Address: ' + addr;
+	}
+
+	var infoWindow = new google.maps.InfoWindow({
+		content : text
+	});
+
+	var marker = new google.maps.Marker({
+		position : map.getCenter(),
+		map : map
+	});
+
+	animateMarkerInDropStyle(marker);
+	addListenerToInfoWindow(marker, infoWindow);
+};
+
+function addListenerToInfoWindow(marker, infoWindow) {
+	google.maps.event.addListener(map, 'click', function() {
+		infoWindow.close();
+	});
+
+	google.maps.event.addListener(marker, 'click', function() {
+		infoWindow.open(map, marker);
+	});
+};
+
+function animateMarkerInDropStyle(marker) {
+	if(marker.getAnimation() != null) {
+		marker.setAnimation(null);
+	} else {
+		marker.setAnimation(google.maps.Animation.DROP);
+	}
+};
 
 function loadPhotos() {
 		var distance = 5 //getDistance();
@@ -82,7 +248,7 @@ function addMarker(photo) {
 
       markersArray.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
-          createInfo(photo.name, photo.url_s).open(map, marker);
+          createInfo(photo.name, photo.url_s, photo.username).open(map, marker);
       });
 }
 
@@ -125,11 +291,12 @@ function deleteOverlays() {
   }
 }
 
-function createInfo(title, image) {
+function createInfo(title, image, username) {
     $('#infoTitle p').remove();
     $('<p>'+title+'</p>').appendTo('#infoTitle');
     $('#infoImage').attr('src', image)
     $('#infoPanel').show();
+    $('.userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
 
 //    return new google.maps.InfoWindow({
 //        content: '<div id="content">'+ title + '</div>'
