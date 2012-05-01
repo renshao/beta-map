@@ -31,7 +31,7 @@ function loadPhotos() {
         success: function(photos) {
 						deleteOverlays();
             $.each(photos, function(index, photo) {
-                addMarker(photo.lat, photo.lng, photo.name, photo.url);
+                addMarker(photo.lat, photo.lng, photo.name, photo.url_sq);
             });
         }
     });

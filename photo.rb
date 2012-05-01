@@ -1,12 +1,12 @@
 class Photo
-    attr_accessor :name, :lat, :lng
+    attr_accessor :name, :lat, :lng, :url_s, :url_sq
 
-    def initialize(name, lat, lng, url)
+    def initialize(name, lat, lng, url_s, url_sq)
         @name = name
         @lat = lat
         @lng = lng
-        @url = url
-        # puts "New photo: #{name} => #{url}"
+        @url_s = url_s
+        @url_sq = url_sq
     end
 
     def to_json(*a)
@@ -14,11 +14,12 @@ class Photo
             :name => @name,
             :lat => @lat,
             :lng => @lng,
-            :url => @url
+            :url_s => @url_s,
+            :url_sq => @url_sq
         }.to_json(*a)
     end
 
     def to_s
-        "#{name} (#{lat}, #{lng}) #{url}"
+        "#{name} (#{lat}, #{lng}) #{url_s} #{url_sq}"
     end
 end
