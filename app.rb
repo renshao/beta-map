@@ -39,10 +39,6 @@ class App < Sinatra::Base
   }
 
   get '/' do
-      erb :index
-  end
-
-  get '/map' do
       erb :map
   end
 
