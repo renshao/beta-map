@@ -82,7 +82,7 @@ function addMarker(photo) {
 
       markersArray.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
-          createInfo(photo.name, photo.url_s).open(map, marker);
+          createInfo(photo.name, photo.url_s, photo.username).open(map, marker);
       });
 }
 
@@ -125,11 +125,12 @@ function deleteOverlays() {
   }
 }
 
-function createInfo(title, image) {
+function createInfo(title, image, username) {
     $('#infoTitle p').remove();
     $('<p>'+title+'</p>').appendTo('#infoTitle');
     $('#infoImage').attr('src', image)
     $('#infoPanel').show();
+    $('.userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
 
 //    return new google.maps.InfoWindow({
 //        content: '<div id="content">'+ title + '</div>'
