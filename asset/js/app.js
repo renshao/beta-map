@@ -90,14 +90,14 @@ function deleteOverlays() {
 }
 
 function createInfo(title, image) {
-    $('#infoTitle').remove('p');
+    $('#infoTitle p').remove();
     $('<p>'+title+'</p>').appendTo('#infoTitle');
     $('#infoImage').attr('src', image)
     $('#infoPanel').show();
 
-    return new google.maps.InfoWindow({
-        content: '<div id="content">'+ title + '</div>'
-    });
+//    return new google.maps.InfoWindow({
+//        content: '<div id="content">'+ title + '</div>'
+//    });
 }
 
 
