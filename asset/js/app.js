@@ -9,5 +9,7 @@ $(document).ready(function(){
         });
         return false;
     });
+
+		$('#searchForm').submit();
 });
 
