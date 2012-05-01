@@ -57,8 +57,7 @@ function addMarker(lat, lng, title, icon) {
 
       markersArray.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
-//          infoWindow.content = '<div id="content">'+ title + '</div>';
-          createInfo(title).open(map, marker);
+          createInfo(title, icon).open(map, marker);
       });
 }
 
@@ -90,8 +89,10 @@ function deleteOverlays() {
   }
 }
 
-function createInfo(title) {
-    $('#infoPanel').text (title);
+function createInfo(title, image) {
+    $('#infoTitle').remove('p');
+    $('<p>'+title+'</p>').appendTo('#infoTitle');
+    $('#infoImage').attr('src', image)
     $('#infoPanel').show();
 
     return new google.maps.InfoWindow({
