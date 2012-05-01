@@ -25,7 +25,7 @@ $(document).ready(function(){
 });
 
 function loadPhotos() {
-		var distance = getDistance();
+		var distance = 5 //getDistance();
 	
     $.ajax({
         url: '/photos',
