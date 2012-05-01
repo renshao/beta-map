@@ -16,25 +16,49 @@ body {
 #controlPanel {
     background: rgba(0, 0, 0, 0.6);
     position: fixed;
+    width: 330px;
     top: 50px;
     right: 50px;
-
     padding: 15px;
+    align:centre;
 }
+
+.center {
+    margin-left:auto;
+    margin-right:auto;
+    width:70%;
+}
+
+.right {
+    position:absolute;
+    right:20px;
+}
+
 
 #infoPanel {
-  background: rgba(255, 255, 255, 0.8);
+  color: white;
+  background: rgba(0, 0, 0, 0.8);
   position: fixed;
-  top: 300px;
+  top: 120px;
   right: 50px;
-  width: 200px;
+  width: 330px;
+  height: 450px;
   display:none;
   padding: 15px;
-
+  margin: 0;
+  font-size:18px;
 }
 
+#infoPanel .mediumImage {
+  border-style:solid;
+  width: 320px;
+  height: 320px;
+
+}
 
 #keyword {
-    width: 200px;
+    width: 250px;
     font-size: 1.1em;
 }
+
+

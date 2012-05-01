@@ -31,9 +31,9 @@ function loadPhotos() {
         url: '/photos_dev',
 				data: {keyword: $('#keyword').val(), lat: map.getCenter().lat(), lon: map.getCenter().lng(), accuracy: distance},
         success: function(photos) {
-						deleteOverlays();
+            deleteOverlays();
             $.each(photos, function(index, photo) {
-                addMarker(photo.lat, photo.lng, photo.name, photo.url_sq);
+                addMarker(photo);
             });
         }
     });
@@ -70,20 +70,31 @@ $(document).ready(function() {
 
 var localTitle;
 
-function addMarker(lat, lng, title, icon) {
+function addMarker(photo) {
+      var markerImg = new google.maps.MarkerImage(photo.url_sq, new google.maps.Size(BLOCK_SIZE, BLOCK_SIZE));
       var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lng),
-        map: map,
-          title: title,
-   		    icon: icon,
-    		animation: google.maps.Animation.DROP
+        position: new google.maps.LatLng(photo.lat, photo.lng),
+          map: map,
+          title: photo.name,
+          icon: markerImg,
+          animation: google.maps.Animation.DROP
       });
 
       markersArray.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
-//          infoWindow.content = '<div id="content">'+ title + '</div>';
-          createInfo(title).open(map, marker);
+          createInfo(photo.name, photo.url_s).open(map, marker);
       });
+}
+
+var BLOCK_SIZE = 30;
+
+function calcMarkerSize(photo) {
+    var width = photo.width, height = photo.height;
+    if (width > height) {
+        return {width: BLOCK_SIZE, height: BLOCK_SIZE * height / width};
+    } else {
+        return {width: BLOCK_SIZE * width / height, height: BLOCK_SIZE};
+    }
 }
 
 // Removes the overlays from the map, but keeps them in the array
@@ -114,13 +125,15 @@ function deleteOverlays() {
   }
 }
 
-function createInfo(title) {
-    $('#infoPanel').text (title);
+function createInfo(title, image) {
+    $('#infoTitle p').remove();
+    $('<p>'+title+'</p>').appendTo('#infoTitle');
+    $('#infoImage').attr('src', image)
     $('#infoPanel').show();
 
-    return new google.maps.InfoWindow({
-        content: '<div id="content">'+ title + '</div>'
-    });
+//    return new google.maps.InfoWindow({
+//        content: '<div id="content">'+ title + '</div>'
+//    });
 }
 
 
