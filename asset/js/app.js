@@ -9,5 +9,18 @@ $(document).ready(function(){
         });
         return false;
     });
+
+    loadPhotos();
 });
+
+function loadPhotos() {
+    $.ajax({
+        url: '/photos',
+        success: function(photos) {
+            $.each(photos, function(index, photo) {
+                addMarker(photo.lat, photo.lng, photo.name, photo.url);
+            });
+        }
+    });
+}
 
