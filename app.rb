@@ -44,7 +44,7 @@ class App < Sinatra::Base
       erb :map
   end
 
-  get '/photos_dev' do
+  get '/photos' do
       content_type :json
       photos = flickr.photos.search populate_search_params
       result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq) }
@@ -52,7 +52,7 @@ class App < Sinatra::Base
       result.to_json
   end
   
-  get '/photos' do
+  get '/photos_dev' do
     content_type :json
     puts "!----------WARNING! IN DEV MODE!----------!"
     
