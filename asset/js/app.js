@@ -4,7 +4,7 @@ $(document).ready(function(){
 
         $.getJSON($form.attr('action'), $form.serialize(), function(photos) {
             $.each(photos, function(index, photo) {
-                addMarker(photo.lat, photo.lng, photo.name);
+                addMarker(photo.lat, photo.lng, photo.name, photo.url);
             });
         });
         return false;
