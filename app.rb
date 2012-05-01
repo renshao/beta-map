@@ -80,7 +80,12 @@ class App < Sinatra::Base
   def populate_twitter_params
     populate_lat_lon
 
-    search_params = {:geo => "#{@lat},#{@lon},20km", :rpp => 10}
+    geocode = "#{@lat},#{@lon},20km"
+
+    search_params = {:geocode => geocode,
+                     :rpp => 10,
+                     :lang => 'en',
+                     :include_entities => true}
     puts "Twitter search params are " + search_params.to_s
 
     return search_params
