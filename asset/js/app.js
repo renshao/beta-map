@@ -28,8 +28,8 @@ function loadPhotos() {
 		var distance = getDistance();
 	
     $.ajax({
-        url: '/photos_dev',
-				data: {keyword: $('#keyword').val(), lat: map.getCenter().lat(), lon: map.getCenter().lng(), accuracy: distance},
+        url: '/photos',
+        data: {keyword: $('#keyword').val(), lat: map.getCenter().lat(), lon: map.getCenter().lng(), accuracy: distance},
         success: function(photos) {
             deleteOverlays();
             $.each(photos, function(index, photo) {
@@ -76,7 +76,7 @@ function addMarker(photo) {
         position: new google.maps.LatLng(photo.lat, photo.lng),
           map: map,
           title: photo.name,
-          icon: markerImg,
+          //icon: markerImg,
           animation: google.maps.Animation.DROP
       });
 
