@@ -26,7 +26,7 @@ $(document).ready(function(){
 
 function loadPhotos() {
     $.ajax({
-        url: '/photos_dev',
+        url: '/photos',
         data: {keyword: $('#keyword').val(), lat: map.getCenter().lat(), lon: map.getCenter().lng(), accuracy: map.getZoom()},
         success: function(photos) {
             deleteOverlays();
@@ -52,7 +52,7 @@ function addMarker(photo) {
         position: new google.maps.LatLng(photo.lat, photo.lng),
           map: map,
           title: photo.name,
-          icon: markerImg,
+          //icon: markerImg,
           animation: google.maps.Animation.DROP
       });
 
