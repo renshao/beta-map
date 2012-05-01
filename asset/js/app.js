@@ -58,8 +58,7 @@ function addMarker(photo) {
 
       markersArray.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
-//          infoWindow.content = '<div id="content">'+ title + '</div>';
-          createInfo(photo.name).open(map, marker);
+          createInfo(photo.name, photo.url_s).open(map, marker);
       });
 }
 
