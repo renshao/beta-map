@@ -7,6 +7,8 @@ require 'sinatra/assetpack'
 
 require './photo_manager'
 
+require 'twitter'
+
 FlickRaw.api_key="665020df0e5ace2a2efbd8a6f5ad1f55"
 FlickRaw.shared_secret="d57c75447d843c9b"
 
@@ -64,19 +66,38 @@ class App < Sinatra::Base
     erb :photos, :locals => {:photos => photos}
   end
 
+  get '/twitter' do
+    query = params[:keyword] ? params[:keyword] : "twitter"
+    twitters = Twitter.search(query, populate_twitter_params)
+    erb :twitters, :locals => {:twitters => twitters}
+  end
+
   def populate_search_params
     puts params.inspect
-    lat      = params[:lat] ? params[:lat] : LAT_DEFAULT
-    lon      = params[:lon] ? params[:lon] : LON_DEFAULT
+    populate_lat_lon
     accuracy = params[:accuracy] ? 20 - params[:accuracy].to_i : 6
 
-    puts "LAT: #{lat}"
-    puts "LON: #{lon}"
-
-    search_params = {:text => params[:keyword], :lat => lat, :lon => lon, :accuracy => accuracy, :per_page => '20', :extras => "geo"}
+    search_params = {:text => params[:keyword], :lat => @lat, :lon => @lon, :accuracy => accuracy, :per_page => '20', :extras => "geo"}
     puts "Flickr search params are " + search_params.to_s
 
     return search_params
+  end
+
+  def populate_twitter_params
+    populate_lat_lon
+
+    search_params = {:geo => "#{@lat},#{@lon},20km", :rpp => 10}
+    puts "Twitter search params are " + search_params.to_s
+
+    return search_params
+  end
+
+  def populate_lat_lon
+    @lat = params[:lat] ? params[:lat] : LAT_DEFAULT
+    @lon = params[:lon] ? params[:lon] : LON_DEFAULT
+
+    puts "LAT: #{@lat}"
+    puts "LON: #{@lon}"
   end
 end
 
