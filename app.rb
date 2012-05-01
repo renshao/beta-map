@@ -49,7 +49,7 @@ class App < Sinatra::Base
   get '/photos' do
       content_type :json
       photos = flickr.photos.search populate_search_params
-      result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, url) }
+      result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, "http://farm#{photo.farm}.staticflickr.com/#{photo.server}/#{photo.id}_#{photo.secret}_t.jpg") }
       
       result.to_json
   end

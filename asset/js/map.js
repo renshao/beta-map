@@ -15,12 +15,12 @@ $(document).ready(function() {
 
 var localTitle;
 
-function addMarker(lat, lng, title) {
+function addMarker(lat, lng, title, icon) {
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
         map: map,
           title: title,
-//    		icon: image,
+   		    icon: icon,
     		animation: google.maps.Animation.DROP
       });
 
