@@ -4,11 +4,19 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<%= css :application, :media => 'screen' %>
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>-->
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyDDl0u4l76xuStrTo9PJbCurMXMi23kEjk"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyDDl0u4l76xuStrTo9PJbCurMXMi23kEjk"></script>
 		<%= js :application %>
 	</head>
 	<body>
-		<div id="mapCanvas"></div>
+        <div id="mapsContainer">
+            <div class="mapOut">
+                <div id="mapCanvas" class="map"></div>
+            </div>
+            <div class="mapOut">
+                <div id="searchMapCanvas" class="map"></div>
+            </div>
+            <div style="clear: both; margin-top: 10px;"></div>
+        </div>
 		<div id="controlPanel">
 			<form id="searchForm" action="photos_dev">
 				<div class="row">
