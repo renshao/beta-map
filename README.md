@@ -1,6 +1,6 @@
 Live URL
 --------
-http://floating-ice-4900.heroku.com/map
+http://floating-ice-4900.heroku.com
 
 Environments
 ------------
