@@ -21,18 +21,18 @@ body {
     -webkit-transition:left 0.7s;
     float: left;
     position: relative;
-    background-color: #ddd;
+    background-color: #444;
 }
 
 .map {
-    height: 400px;
+    min-height: 500px;
     margin: 30px 30px;
-    box-shadow: 15px 15px 15px #888;
+    box-shadow: 0 0 15px 5px #000;
 }
 
 #controlPanel {
     background: rgba(0, 0, 0, 0.6);
-    position: fixed;
+    position: absolute;
     width: 330px;
     top: 50px;
     right: 50px;
@@ -55,7 +55,7 @@ body {
 #infoPanel {
   color: white;
   background: rgba(0, 0, 0, 0.8);
-  position: fixed;
+  position: relative;
   top: 120px;
   right: 50px;
   width: 330px;

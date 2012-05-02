@@ -10,50 +10,38 @@
 	<body>
         <div id="mapsContainer">
             <div class="mapOut">
-                <div id="mapCanvas" class="map"></div>
+                <div id="realtimeMapCanvas" class="map"></div>
+                <div id="a"><div id="arrowRight"></div></div>
             </div>
             <div class="mapOut">
-                <div id="searchMapCanvas" class="map"></div>
+                <div id="mapCanvas" class="map"></div>
+                <div id="controlPanel">
+                    <form id="searchForm" action="photos_dev">
+                        <div class="row">
+                            <input id="keyword" name="keyword"/>
+                            <button type="submit" class="right">
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                    <div class="row">
+                        Find Places:
+                        <input type="text" id="address"/>
+                        <input type="button" value="Go" onclick="geocode()">
+                        <input type="button" value="Add Marker at Center" onclick="addMarkerAtCenter()"/>
+                    </div>
+                </div>
+                <div id="infoPanel">
+                    <div id="infoTitle"></div>
+                    <div class='mediumImage'><img id="infoImage"/>
+                    </div>
+                    <div class='userPhoto'>
+                        <a class="userPhoto" href="photo/{username}">Search for more photos by this user</a>
+                    </div>
+                </div>
             </div>
             <div style="clear: both; margin-top: 10px;"></div>
         </div>
-		<div id="controlPanel">
-			<form id="searchForm" action="photos_dev">
-				<div class="row">
-					<input id="keyword" name="keyword"/>
-					<button type="submit" class="right">
-						Search
-					</button>
-				</div>
-			</form>
-			<div class="row">
-				Find Places:
-				<input type="text" id="address"/>
-				<input type="button" value="Go" onclick="geocode()">
-				<input type="button" value="Add Marker at Center" onclick="addMarkerAtCenter()"/>
-			</div>
-		</div>
-		<div id="infoPanel">
-			<div id="infoTitle"></div>
-			<div class='mediumImage'><img id="infoImage"/>
-			</div>
-			<div class='userPhoto'>
-				<a class="userPhoto" href="photo/{username}">Search for more photos by this user</a>
-			</div>
-		</div>
-
-		<table>
-			<tr>
-				<td>Lat/Lng:</td><td><div id="latlng"></div></td>
-			</tr>
-			<tr>
-				<td>Address:</td><td><div id="formatedAddress"></div></td>
-			</tr>
-			<tr>
-				<td>Zoom Level</td>
-				<td><div id="zoom_level"></div></td>
-			</tr>
-		</table>
 	</body>
 </html>
 
