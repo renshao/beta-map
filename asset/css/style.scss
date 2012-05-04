@@ -9,6 +9,7 @@ body {
     padding: 0;
     width: 100%;
     overflow-x: hidden;
+    font-family: Lucida Grande;
 }
 
 #mapsContainer {
@@ -59,7 +60,7 @@ div.right {
 }
 
 #controlPanel {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     position: absolute;
     width: 330px;
     top: 50px;
@@ -68,26 +69,19 @@ div.right {
     align:centre;
 }
 
-.center {
-    margin-left:auto;
-    margin-right:auto;
-    width:70%;
-}
-
-
 
 #infoPanel {
   color: white;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.7);
   position: absolute;
-  top: 120px;
+  top: 140px;
   right: 50px;
+  bottom: 80px;
   width: 330px;
-  height: 450px;
-  display:none;
+  min-height: 320px;
+  display: none;
   padding: 15px;
-  margin: 0;
-  font-size:18px;
+  font-size: 0.9em;
 }
 
 #infoPanel a {
@@ -95,10 +89,8 @@ div.right {
 }
 
 #infoPanel .mediumImage {
-  border-style:solid;
   width: 320px;
   height: 320px;
-
 }
 
 #infoImage{
