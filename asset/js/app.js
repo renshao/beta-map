@@ -221,10 +221,6 @@ function getDistance() {
 var map;
 var markersArray = [];
 
-$(document).ready(function() {
-
-});
-
 var localTitle;
 
 function addMarker(photo) {
@@ -239,7 +235,7 @@ function addMarker(photo) {
 
       markersArray.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
-          createInfo(photo.name, photo.url_s, photo.username).open(map, marker);
+          createInfo(photo.name, photo.url_s, photo.username);
       });
 }
 
