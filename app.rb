@@ -43,8 +43,8 @@ class App < Sinatra::Base
   }
   
   Instagram.configure do |config|
-    config.client_id = "ddbe06df91774af98776a3aa31fce89f"
-    config.access_token = "9e8fc0a0b3824e20bf574b57af1b146d"
+    config.client_id = "ddbe06df91774af98776a3aa31fce89f" 
+    config.access_token = "51500982.ddbe06d.2c0a0ca1189543929599b0cf0c8d121f"
   end
 
   get '/' do
@@ -53,15 +53,18 @@ class App < Sinatra::Base
 
   get '/photos' do
     content_type :json
-    photos = flickr.photos.search populate_search_params
+    flickrs = flickr.photos.search populate_search_params
+    instagrams = Instagram.media_search(LAT_DEFAULT,LON_DEFAULT)
     
-    result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
+    flickr_photos = flickrs.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
+    instagram_photos = instagrams.data.collect { |photo| Photo.new("instagrammmy", photo.location.latitude, photo.location.longitude, photo.images.standard_resolution.url, photo.images.standard_resolution.url, photo.user.full_name)}
     
+    result = flickr_photos + instagram_photos
     result.to_json
   end
   
   get '/instagram' do
-    puts Instagram.media_search(LAT_DEFAULT,LON_DEFAULT)
+    puts Instagram.media_search(LAT_DEFAULT,LON_DEFAULT).data.first.images.standard_resolution.url
   end
   
   get '/photos_dev' do
