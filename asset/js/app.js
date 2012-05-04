@@ -49,7 +49,7 @@ $(document).ready(function(){
 	setupEvents();
 	centerChanged();
 
-	$("#zoom_level").get(0).innerHTML = map.getZoom();
+//	$("#zoom_level").get(0).innerHTML = map.getZoom();
 
 	var input = $("#address").get(0);
 	var autocomplete = new google.maps.places.Autocomplete(input);
