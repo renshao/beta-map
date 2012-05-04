@@ -63,32 +63,6 @@ $(document).ready(function(){
 	});
 
 	google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        /*
-		infoWindow.close();
-		var place = autocomplete.getPlace();
-		if(place.geometry.viewport) {
-			map.fitBounds(place.geometry.viewport);
-		} else {
-			map.setCenter(place.geometry.location);
-			map.setZoom(17);
-			// Why 17? Because it looks good.
-		}
-
-		var image = new google.maps.MarkerImage(place.icon, new google.maps.Size(71, 71), new google.maps.Point(0, 0), new google.maps.Point(17, 34), new google.maps.Size(35, 35));
-		marker.setIcon(image);
-		marker.setPosition(place.geometry.location);
-
-		animateMarkerInDropStyle(marker);
-		addListenerToInfoWindow(marker, infoWindow);
-
-		var address = '';
-		if(place.address_components) {
-			address = [(place.address_components[0] && place.address_components[0].short_name || ''), (place.address_components[1] && place.address_components[1].short_name || ''), (place.address_components[2] && place.address_components[2].short_name || '')].join(' ');
-		}
-
-		infoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-		infoWindow.open(map, marker);
-*/
 		loadPhotos();
 	});
 
@@ -127,7 +101,7 @@ function reverseGeocodeResult(results, status) {
 		if(results.length == 0) {
 			$("#formatedAddress").get(0).innerHTML = 'None';
 		} else {
-			$("#formatedAddress").get(0).innerHTML = results[0].formatted_address;
+			//$("#formatedAddress").get(0).innerHTML = results[0].formatted_address;
 		}
 	} else {
 		$("#formatedAddress").get(0).innerHTML = 'Error';
@@ -223,13 +197,14 @@ var markersArray = [];
 
 var localTitle;
 
+var BLOCK_SIZE = 30;
 function addMarker(photo) {
-      var markerImg = new google.maps.MarkerImage(photo.url_sq, new google.maps.Size(BLOCK_SIZE, BLOCK_SIZE));
+      var markerImg = new google.maps.MarkerImage('/images/camera.png');
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(photo.lat, photo.lng),
           map: map,
           title: photo.name,
-          //icon: markerImg,
+          icon: markerImg,
           animation: google.maps.Animation.DROP
       });
 
@@ -239,7 +214,6 @@ function addMarker(photo) {
       });
 }
 
-var BLOCK_SIZE = 30;
 
 function calcMarkerSize(photo) {
     var width = photo.width, height = photo.height;

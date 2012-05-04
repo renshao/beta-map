@@ -39,24 +39,23 @@ div.right {
     margin-left: 50px;
 }
 
-#toSearch {
-    width: 128px;
-    height: 128px;
-    background: url(../images/next.png) no-repeat;
+.switchButton {
+    width: 90px;
+    height: 90px;
     display: inline-block;
     position: absolute;
     top: 240px;
-    right: 5px;
+    cursor: pointer;
+}
+
+#toSearch {
+    background: url(../images/next.png) no-repeat;
+    right: 27px;
 }
 
 #toRealtime {
-    width: 128px;
-    height: 128px;
     background: url(../images/previous.png) no-repeat;
-    display: inline-block;
-    position: absolute;
-    top: 240px;
-    left: 5px;
+    left: 27px;
 }
 
 #controlPanel {
