@@ -17,7 +17,7 @@ $(document).ready(function(){
     };
     map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
     
-	  google.maps.event.addListener(map, 'center_changed', function() {
+	  google.maps.event.addListener(map, 'dragend', function() {
 	        window.setTimeout(function() {
 	  				loadPhotos();
 	        }, 1000);
