@@ -35,7 +35,7 @@ $(document).ready(function() {
 	setupEvents();
 	centerChanged();
 
-	$("#zoom_level").get(0).innerHTML = map.getZoom();
+	console.log(map.getZoom());
 
 	var input = $("#address").get(0);
 	var autocomplete = new google.maps.places.Autocomplete(input);
@@ -121,9 +121,9 @@ function reverseGeocodeResult(results, status) {
 function centerChanged() {
 	centerChangedLast = new Date();
 	var latlng = getCenterLatLngText();
-	$("#latlng").get(0).innerHTML = latlng;
-	$("#formatedAddress").get(0).innerHTML = '';
-	currentReverseGeocodeResponse = null;
+	//$("#latlng").get(0).innerHTML = latlng;
+	//$("#formatedAddress").get(0).innerHTML = '';
+	//currentReverseGeocodeResponse = null;
 }
 
 function getCenterLatLngText() {
