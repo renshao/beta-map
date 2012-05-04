@@ -7,10 +7,12 @@ require 'sinatra/assetpack'
 
 require './photo_manager'
 
-require 'twitter'
+require 'instagram'
 
 FlickRaw.api_key="665020df0e5ace2a2efbd8a6f5ad1f55"
 FlickRaw.shared_secret="d57c75447d843c9b"
+
+
 
 class App < Sinatra::Base
   LAT_DEFAULT = '-33.863093'
@@ -39,18 +41,27 @@ class App < Sinatra::Base
     js_compression  :jsmin      # Optional
     css_compression :sass       # Optional
   }
+  
+  Instagram.configure do |config|
+    config.client_id = "ddbe06df91774af98776a3aa31fce89f"
+    config.access_token = "9e8fc0a0b3824e20bf574b57af1b146d"
+  end
 
   get '/' do
       erb :map
   end
 
   get '/photos' do
-      content_type :json
-      photos = flickr.photos.search populate_search_params
-
-      result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
-      
-      result.to_json
+    content_type :json
+    photos = flickr.photos.search populate_search_params
+    
+    result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
+    
+    result.to_json
+  end
+  
+  get '/instagram' do
+    puts Instagram.media_search(LAT_DEFAULT,LON_DEFAULT)
   end
   
   get '/photos_dev' do
