@@ -26,8 +26,18 @@ body {
 
 .map {
     min-height: 500px;
-    margin: 30px 30px;
+    margin: 30px 90px 30px 30px;
     box-shadow: 0 0 15px 5px #000;
+}
+
+#toSearch {
+    width: 128px;
+    height: 128px;
+    background: url(../images/next.png);
+    display: inline-block;
+    position: absolute;
+    top: 240px;
+    right: 10px;
 }
 
 #controlPanel {
@@ -55,8 +65,7 @@ body {
 #infoPanel {
   color: white;
   background: rgba(0, 0, 0, 0.8);
-  position: fixed;
-  //position: relative;
+  position: absolute;
   top: 120px;
   right: 50px;
   width: 330px;
