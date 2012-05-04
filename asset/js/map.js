@@ -21,4 +21,9 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    $('input').keydown(function(e){
+        e.stopPropagation();
+        return true;
+    });
 });
