@@ -26,8 +26,36 @@ body {
 
 .map {
     min-height: 500px;
-    margin: 30px 30px;
+    margin: 30px;
     box-shadow: 0 0 15px 5px #000;
+}
+
+div.left {
+    margin-right: 50px;
+}
+
+div.right {
+    margin-left: 50px;
+}
+
+#toSearch {
+    width: 128px;
+    height: 128px;
+    background: url(../images/next.png) no-repeat;
+    display: inline-block;
+    position: absolute;
+    top: 240px;
+    right: 5px;
+}
+
+#toRealtime {
+    width: 128px;
+    height: 128px;
+    background: url(../images/previous.png) no-repeat;
+    display: inline-block;
+    position: absolute;
+    top: 240px;
+    left: 5px;
 }
 
 #controlPanel {
@@ -46,17 +74,12 @@ body {
     width:70%;
 }
 
-.right {
-    position:absolute;
-    right:20px;
-}
 
 
 #infoPanel {
   color: white;
   background: rgba(0, 0, 0, 0.8);
-  position: fixed;
-  //position: relative;
+  position: absolute;
   top: 120px;
   right: 50px;
   width: 330px;

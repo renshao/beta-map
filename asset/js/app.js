@@ -1,4 +1,3 @@
-
 var map;
 var markersArray = [];
 
@@ -7,35 +6,50 @@ var centerChangedLast;
 var reverseGeocodedLast;
 var currentReverseGeocodeResponse;
 
-$(document).ready(function() {
-	var sydney = new google.maps.LatLng(-33.863093, 151.207731);
+$(document).ready(function(){
+	  var sydney = new google.maps.LatLng(-33.863093, 151.207731);
+    
+    var myOptions = {
+      center: sydney,
+      zoom: 15,
+	  disableDefaultUI: false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
+    
+	  google.maps.event.addListener(map, 'dragend', function() {
+	        window.setTimeout(function() {
+	  				loadPhotos();
+	        }, 1000);
+	  });
+	
+    $('#searchForm').submit(function(e){
+        loadPhotos();
 
-	var myOptions = {
-		center : sydney,
-		zoom : 15,
-		disableDefaultUI : false,
-		mapTypeId : google.maps.MapTypeId.ROADMAP
-	};
-	map = new google.maps.Map($("#mapCanvas").get(0), myOptions);
+        return false;
+    });
 
-	google.maps.event.addListener(map, 'dragend', function() {
-		window.setTimeout(function() {
-			loadPhotos();
-		}, 1000);
-	});
+    $('#userPhoto').click(function(e){
+        $('body').css('cursor', 'wait');
 
-	$('#searchForm').submit(function(e) {
-		loadPhotos();
+        $.getJSON($('#userPhoto').attr('href'),function(photos) {
+            createInfo(photos[0]);
+            $('body').css('cursor', 'auto');
+//            $.each(photos, function(index, photo) {
+//                createInfo(photo)
+//            });
+        })
 
-		return false;
-	});
+        return false;
+    });
 
+    
 	geocoder = new google.maps.Geocoder();
 
 	setupEvents();
 	centerChanged();
 
-	console.log(map.getZoom());
+//	$("#zoom_level").get(0).innerHTML = map.getZoom();
 
 	var input = $("#address").get(0);
 	var autocomplete = new google.maps.places.Autocomplete(input);
@@ -77,8 +91,9 @@ $(document).ready(function() {
 		loadPhotos();
 	});
 
-	loadPhotos();
-}); 
+    loadPhotos();
+});
+
 
 function setupEvents() {
 	reverseGeocodedLast = new Date();
@@ -121,9 +136,9 @@ function reverseGeocodeResult(results, status) {
 function centerChanged() {
 	centerChangedLast = new Date();
 	var latlng = getCenterLatLngText();
-	//$("#latlng").get(0).innerHTML = latlng;
-	//$("#formatedAddress").get(0).innerHTML = '';
-	//currentReverseGeocodeResponse = null;
+//	$("#latlng").get(0).innerHTML = latlng;
+//	$("#formatedAddress").get(0).innerHTML = '';
+//	currentReverseGeocodeResponse = null;
 }
 
 function getCenterLatLngText() {
@@ -192,7 +207,7 @@ function animateMarkerInDropStyle(marker) {
 
 function loadPhotos() {
 		var distance = 5 //getDistance();
-	
+
     $.ajax({
         url: '/photos',
         data: {keyword: $('#keyword').val(), lat: map.getCenter().lat(), lon: map.getCenter().lng(), accuracy: distance},
@@ -212,18 +227,18 @@ function getDistance() {
 	ne = bounds.getNorthEast();
 
 	// r = radius of the earth in statute miles
-	var r = 3963.0;  
+	var r = 3963.0;
 
 	// Convert lat or lng from decimal degrees into radians (divide by 57.2958)
-	var lat1 = center.lat() / 57.2958; 
+	var lat1 = center.lat() / 57.2958;
 	var lon1 = center.lng() / 57.2958;
 	var lat2 = ne.lat() / 57.2958;
 	var lon2 = ne.lng() / 57.2958;
 
 	// distance = circle radius from center to Northeast corner of bounds
-	var dis = r * Math.acos(Math.sin(lat1) * Math.sin(lat2) + 
+	var dis = r * Math.acos(Math.sin(lat1) * Math.sin(lat2) +
 	  Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
-	
+
 	return dis;
 }
 
@@ -231,15 +246,14 @@ var map;
 var markersArray = [];
 
 $(document).ready(function() {
-  
+
 });
 
-var oldMarker;
 var localTitle;
 
 function addMarker(photo) {
       var markerImg = new google.maps.MarkerImage(photo.url_sq, new google.maps.Size(BLOCK_SIZE, BLOCK_SIZE));
-      var currentMarker = new google.maps.Marker({
+      var marker = new google.maps.Marker({
         position: new google.maps.LatLng(photo.lat, photo.lng),
           map: map,
           title: photo.name,
@@ -247,17 +261,10 @@ function addMarker(photo) {
           animation: google.maps.Animation.DROP
       });
 
-      markersArray.push(currentMarker);
-
-	google.maps.event.addListener(currentMarker, 'click', function() {
-		if (!oldMarker) {
-		    oldMarker = currentMarker;
-		}
-		oldMarker.setAnimation(null);
-		currentMarker.setAnimation(google.maps.Animation.BOUNCE);
-	    oldMarker = currentMarker;
-		createInfo(photo.name, photo.url_s, photo.username).open(map, currentMarker);
-	});
+      markersArray.push(marker);
+      google.maps.event.addListener(marker, 'click', function() {
+          createInfo(photo.name, photo.url_s, photo.username).open(map, marker);
+      });
 }
 
 var BLOCK_SIZE = 30;
