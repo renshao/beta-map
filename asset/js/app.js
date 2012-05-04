@@ -63,6 +63,7 @@ $(document).ready(function(){
 	});
 
 	google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        /*
 		infoWindow.close();
 		var place = autocomplete.getPlace();
 		if(place.geometry.viewport) {
@@ -87,7 +88,7 @@ $(document).ready(function(){
 
 		infoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
 		infoWindow.open(map, marker);
-
+*/
 		loadPhotos();
 	});
 
@@ -161,31 +162,6 @@ function geocodeResult(results, status) {
 	}
 }
 
-function addMarkerAtCenter() {
-	var text = '<h3>Marker position is:</h3><br>';
-	text = text + 'Lat/Lng: ' + getCenterLatLngText();
-	if(currentReverseGeocodeResponse) {
-		var addr = '';
-		if(currentReverseGeocodeResponse.size == 0) {
-			addr = 'None';
-		} else {
-			addr = currentReverseGeocodeResponse[0].formatted_address;
-		}
-		text = text + '<br>' + 'Address: ' + addr;
-	}
-
-	var infoWindow = new google.maps.InfoWindow({
-		content : text
-	});
-
-	var marker = new google.maps.Marker({
-		position : map.getCenter(),
-		map : map
-	});
-
-	animateMarkerInDropStyle(marker);
-	addListenerToInfoWindow(marker, infoWindow);
-};
 
 function addListenerToInfoWindow(marker, infoWindow) {
 	google.maps.event.addListener(map, 'click', function() {
