@@ -64,7 +64,7 @@ class App < Sinatra::Base
   end
   
   get '/instagram' do
-    puts Instagram.media_search(LAT_DEFAULT,LON_DEFAULT).data.first.images.standard_resolution.url
+    puts Instagram.media_search(LAT_DEFAULT,LON_DEFAULT).data.first.images
   end
   
   get '/photos_dev' do
