@@ -53,8 +53,10 @@ class App < Sinatra::Base
 
   get '/photos' do
     content_type :json
+    populate_lat_lon
+    
     # flickrs = flickr.photos.search populate_search_params
-    instagrams = Instagram.media_search(LAT_DEFAULT,LON_DEFAULT)
+    instagrams = Instagram.media_search(@lat,@lon, {:count => 50})
     
     flickr_photos = []#flickrs.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
     instagram_photos = instagrams.data.collect do |photo| 
@@ -66,8 +68,20 @@ class App < Sinatra::Base
     result.to_json
   end
   
+  get '/most_popular' do
+    content_type :json
+    
+    instagrams = Instagram.media_popular
+    instagrams.delete_if { |photo| photo.location.nil? } 
+    puts instagrams.count
+    instagrams.collect do |photo| 
+      caption = photo.caption ? photo.caption.text : ""
+      Photo.new(caption, photo.location.latitude, photo.location.longitude, photo.images.standard_resolution.url, photo.images.standard_resolution.url, photo.user.full_name)
+    end.to_json
+  end
+  
   get '/instagram' do
-    puts Instagram.media_search(LAT_DEFAULT,LON_DEFAULT).data
+    puts Instagram.media_search(LAT_DEFAULT,LON_DEFAULT, {:count => 50}).data.count
   end
 
   get '/photo/:name' do
