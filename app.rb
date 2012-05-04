@@ -89,11 +89,7 @@ class App < Sinatra::Base
     populate_lat_lon
     accuracy = params[:accuracy] ? params[:accuracy] : 5
 
-    search_params = {:text => params[:keyword], :lat => @lat, :lon => @lon, :radius => accuracy, :per_page => '20', :extras => "geo, url_s, url_sq, owner_name"}
-
-    puts "Flickr search params are " + search_params.to_s
-
-    return search_params
+    {:text => params[:keyword], :lat => @lat, :lon => @lon, :radius => accuracy, :per_page => '20', :extras => "geo, url_s, url_sq, owner_name"}
   end
 
   def populate_twitter_params
