@@ -234,11 +234,12 @@ $(document).ready(function() {
   
 });
 
+var oldMarker;
 var localTitle;
 
 function addMarker(photo) {
       var markerImg = new google.maps.MarkerImage(photo.url_sq, new google.maps.Size(BLOCK_SIZE, BLOCK_SIZE));
-      var marker = new google.maps.Marker({
+      var currentMarker = new google.maps.Marker({
         position: new google.maps.LatLng(photo.lat, photo.lng),
           map: map,
           title: photo.name,
@@ -246,10 +247,17 @@ function addMarker(photo) {
           animation: google.maps.Animation.DROP
       });
 
-      markersArray.push(marker);
-      google.maps.event.addListener(marker, 'click', function() {
-          createInfo(photo.name, photo.url_s, photo.username).open(map, marker);
-      });
+      markersArray.push(currentMarker);
+
+	google.maps.event.addListener(currentMarker, 'click', function() {
+		if (!oldMarker) {
+		    oldMarker = currentMarker;
+		}
+		oldMarker.setAnimation(null);
+		currentMarker.setAnimation(google.maps.Animation.BOUNCE);
+	    oldMarker = currentMarker;
+		createInfo(photo.name, photo.url_s, photo.username).open(map, currentMarker);
+	});
 }
 
 var BLOCK_SIZE = 30;
