@@ -1,7 +1,8 @@
 class Photo
     attr_accessor :name, :lat, :lng, :url_s, :url_sq, :username, :created_at
 
-    def initialize(name, lat, lng, url_s, url_sq, username, created_at)
+    def initialize(id, name, lat, lng, url_s, url_sq, username, created_at)
+        @id = id
         @name = name
         @lat = lat
         @lng = lng
@@ -13,6 +14,7 @@ class Photo
 
     def to_json(*a)
         {
+            :id => @id,
             :name => @name,
             :lat => @lat,
             :lng => @lng,

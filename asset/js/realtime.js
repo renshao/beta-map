@@ -1,8 +1,36 @@
 var FETCH_INTERVAL = 10000; // 10 seconds
 var realtimeMap;
 var realtimeMarkers = [];
-var realtimePhotoHash = {};
 var MAX_MARKERS = 20;
+
+BetaMap = {};
+BetaMap.PhotoQueue = function() {
+    this.queue = [];
+    this.hash = {};
+    this.markerQueue = [];
+};
+BetaMap.PhotoQueue.prototype.addAll = function(photos) {
+    var self = this;
+    $.each(photos, function(index, photo){
+        if (self.hash[photo.id]) {
+            return;
+        }
+
+        self.hash[photo.id] = photo;
+        self.queue.push(photo);
+    }); 
+};
+BetaMap.PhotoQueue.prototype.consume = function() {
+    if (this.queue.length === 0) {
+        return;
+    }
+
+    var photo = this.queue.shift();
+    addRealtimePhotoMarker(photo);
+};
+
+
+var photoQueue = new BetaMap.PhotoQueue();
 
 $(document).ready(function() {
     $('.map').height($(document).height() - 100);
@@ -16,26 +44,22 @@ $(document).ready(function() {
 	};
 	realtimeMap = new google.maps.Map($("#realtimeMapCanvas").get(0), myOptions);
 
+    setInterval("photoQueue.consume()", 1000);
+
     setInterval(getRealtimePhotos, FETCH_INTERVAL);
 });
 
 
 function getRealtimePhotos() {
     $.getJSON('/most_popular', function(photos){
-        $.each(photos, function(index, photo){
-            addRealtimePhotoMarker(photo);
-        });
+        photoQueue.addAll(photos);
     });
 }
 
 function addRealtimePhotoMarker(photo) {
-    if (realtimePhotoHash[photo.name]) {
-        return; // return if photo already exists
-    }
     while (realtimeMarkers.length >= MAX_MARKERS) {
         var markerToRemove = realtimeMarkers.shift();
         markerToRemove.setMap(null);
-        delete realtimePhotoHash[markerToRemove.title]; // remove from hash
     }
 	var markerImg = new google.maps.MarkerImage('/images/camera.png');
 	var marker = new google.maps.Marker({
@@ -51,5 +75,5 @@ function addRealtimePhotoMarker(photo) {
 	});
 
     realtimeMarkers.push(marker);
-    realtimePhotoHash[photo.name] = photo;
 }
+

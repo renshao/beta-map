@@ -113,7 +113,7 @@ class App < Sinatra::Base
     created_time = Time.at(photo.created_time.to_i).strftime("%I:%M%p %d %b %Y")
 
     caption = photo.caption ? photo.caption.text : ""
-    Photo.new(caption,
+    Photo.new(photo.id, caption,
               photo.location.latitude,
               photo.location.longitude,
               photo.images.standard_resolution.url,
