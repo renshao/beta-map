@@ -1,11 +1,12 @@
 var FETCH_INTERVAL = 10000; // 10 seconds
 var realtimeMap;
 var realtimeMarkers = [];
+var realtimePhotoHash = {};
 var MAX_MARKERS = 20;
 
 $(document).ready(function() {
     $('.map').height($(document).height() - 100);
-	var sydney = new google.maps.LatLng(-33.863093, 151.207731);
+	var sydney = new google.maps.LatLng(0, 151.207731);
 
 	var myOptions = {
 		center : sydney,
@@ -28,9 +29,13 @@ function getRealtimePhotos() {
 }
 
 function addRealtimePhotoMarker(photo) {
+    if (realtimePhotoHash[photo.name]) {
+        return; // return if photo already exists
+    }
     while (realtimeMarkers.length >= MAX_MARKERS) {
         var markerToRemove = realtimeMarkers.shift();
         markerToRemove.setMap(null);
+        delete realtimePhotoHash[markerToRemove.title]; // remove from hash
     }
 	var markerImg = new google.maps.MarkerImage('/images/camera.png');
 	var marker = new google.maps.Marker({
@@ -46,4 +51,5 @@ function addRealtimePhotoMarker(photo) {
 	});
 
     realtimeMarkers.push(marker);
+    realtimePhotoHash[photo.name] = photo;
 }
