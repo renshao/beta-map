@@ -11,13 +11,13 @@
         <div id="mapsContainer">
             <div class="mapOut">
                 <div id="realtimeMapCanvas" class="map left"></div>
-                <a class="switchButton" view="search" id="toSearch"></a>
+                <a class="arrow" view="search" id="toSearch"></a>
             </div>
             <div class="mapOut">
                 <div id="mapCanvas" class="map right"></div>
-                <a class="switchButton" view='realtime' id="toRealtime"></a>
+                <a class="arrow" view='realtime' id="toRealtime"></a>
 
-                <div id="controlPanel">
+                <div id="searchPanel">
                     <form id="searchForm" action="photos_dev">
                         <div class="row">
                             <input id="keyword" name="keyword"/>
@@ -26,12 +26,16 @@
                             </button>
                         </div>
                     </form>
+                </div>
+
+                <div id="locationPanel">
                     <div class="row">
                         Find Places:
                         <input type="text" id="address"/>
                         <input type="button" value="Go" onclick="geocode()">
                     </div>
                 </div>
+
                 <div id="infoPanel">
                     <div id="infoTitle"></div>
                     <div class='mediumImage'><img id="infoImage"/>

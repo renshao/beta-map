@@ -58,29 +58,35 @@ div.right {
     left: 27px;
 }
 
-#controlPanel {
+@mixin panel {
     background: rgba(0, 0, 0, 0.7);
-    position: absolute;
-    width: 330px;
-    top: 50px;
+    border-radius: 8px;
     right: 50px;
-    padding: 15px;
-    align:centre;
+    position: absolute;
+    padding: 10px;
+    color: white;
 }
 
+#searchPanel {
+    @include panel;
+    width: 330px;
+    top: 50px;
+}
+
+#locationPanel {
+    @include panel;
+    width: 330px;
+    top: 135px;
+}
 
 #infoPanel {
-  color: white;
-  background: rgba(0, 0, 0, 0.7);
-  position: absolute;
-  top: 140px;
-  right: 50px;
-  bottom: 80px;
-  width: 330px;
-  min-height: 320px;
-  display: none;
-  padding: 15px;
-  font-size: 0.9em;
+    @include panel;
+    top: 220px;
+    bottom: 80px;
+    width: 330px;
+    min-height: 320px;
+    display: none;
+    font-size: 0.9em;
 }
 
 #infoPanel a {
