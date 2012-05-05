@@ -44,7 +44,7 @@ div.right {
     height: 90px;
     display: inline-block;
     position: absolute;
-    top: 240px;
+    top: 383px;
     cursor: pointer;
 }
 
@@ -69,17 +69,41 @@ div.right {
 
     input {
         height: 20px;
+        width: 260px;
+        border-radius: 3px;
     }
 }
 
 #searchPanel {
     @include panel;
     top: 65px;
+
+    #searchButton {
+        display: inline-block;
+        position: absolute;
+        top: 7px;
+        right: 20px;
+        width: 38px;
+        height: 37px;
+        background: url(/images/search.png) no-repeat;
+        cursor: pointer;
+    }
 }
 
 #locationPanel {
     @include panel;
     top: 123px;
+
+    #locationButton {
+        display: inline-block;
+        position: absolute;
+        top: 7px;
+        right: 22px;
+        width: 30px;
+        height: 41px;
+        background: url(/images/location.png) no-repeat;
+        cursor: pointer;
+    }
 }
 
 #infoPanel {

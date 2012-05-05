@@ -21,6 +21,7 @@ $(document).ready(function() {
         e.stopPropagation();
         return true;
     });
+
 });
 
 function geocode() {

@@ -3,7 +3,6 @@
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<%= css :application, :media => 'screen' %>
-		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>-->
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyDDl0u4l76xuStrTo9PJbCurMXMi23kEjk"></script>
 		<%= js :application %>
 
@@ -30,24 +29,20 @@
             </div>
             <div class="mapOut">
                 <div id="mapCanvas" class="map right"></div>
-                <a class="arrow" view='realtime' id="toRealtime"></a>
+                <a class="arrow" view="realtime" id="toRealtime"></a>
 
                 <div id="searchPanel">
                     <form id="searchForm" action="photos_dev">
                         <div class="row">
                             <input id="keyword" name="keyword"/>
-                            <button type="submit">
-                                Search
-                            </button>
+                            <a id="searchButton" onclick="$('#searchForm').submit();"></a>
                         </div>
                     </form>
                 </div>
 
                 <div id="locationPanel">
-                    <div class="row">
-                        <input type="text" id="address"/>
-                        <input type="button" value="Go" onclick="geocode()">
-                    </div>
+                    <input type="text" id="address"/>
+                    <a id="locationButton" onclick="geocode()"></a>
                 </div>
 
                 <div id="infoPanel">

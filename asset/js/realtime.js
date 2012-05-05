@@ -44,9 +44,9 @@ $(document).ready(function() {
 	};
 	realtimeMap = new google.maps.Map($("#realtimeMapCanvas").get(0), myOptions);
 
-    //setInterval("photoQueue.consume()", 1000);
+    setInterval("photoQueue.consume()", 3000);
 
-    //setInterval(getRealtimePhotos, FETCH_INTERVAL);
+    setInterval(getRealtimePhotos, FETCH_INTERVAL);
 });
 
 
@@ -56,24 +56,32 @@ function getRealtimePhotos() {
     });
 }
 
+
 function addRealtimePhotoMarker(photo) {
     while (realtimeMarkers.length >= MAX_MARKERS) {
         var markerToRemove = realtimeMarkers.shift();
         markerToRemove.setMap(null);
     }
-	var markerImg = new google.maps.MarkerImage('/images/camera.png');
 	var marker = new google.maps.Marker({
 		position : new google.maps.LatLng(photo.lat, photo.lng),
 		map : realtimeMap,
 		title : photo.name,
-		icon : markerImg,
-		animation : google.maps.Animation.DROP
+		icon : cameraIcon 
+		//animation : google.maps.Animation.BOUNCE
 	});
 
-	google.maps.event.addListener(marker, 'click', function() {
-		//createInfo(photo.name, photo.url_s, photo.username);
-	});
 
     realtimeMarkers.push(marker);
+	showLastPhoto(marker, photo);
 }
-
+var lastInfoWindow = null;
+function showLastPhoto(marker, photo){
+    if (lastInfoWindow) {
+        lastInfoWindow.close();
+    }
+    lastInfoWindow = new google.maps.InfoWindow({
+        content: "<img src='" + photo.url_s + "' width='100px;'/>",
+        position: marker.getPosition()
+    });
+    lastInfoWindow.open(realtimeMap);
+}

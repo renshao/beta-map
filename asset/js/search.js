@@ -3,7 +3,14 @@ var markersArray = [];
 var localTitle;
 var BLOCK_SIZE = 30;
 
+var cameraIcon, redCameraIcon;
+
+var selectedMarker;
+
 $(document).ready(function() {
+    cameraIcon = new google.maps.MarkerImage('/images/camera.png');
+    redCameraIcon = new google.maps.MarkerImage('/images/camera_red.png');
+
 	var sydney = new google.maps.LatLng(-33.863093, 151.207731);
 
 	var myOptions = {
@@ -82,17 +89,21 @@ function loadPhotos() {
 }
 
 function addMarker(photo) {
-	var markerImg = new google.maps.MarkerImage('/images/camera.png');
 	var marker = new google.maps.Marker({
 		position : new google.maps.LatLng(photo.lat, photo.lng),
 		map : searchMap,
 		title : photo.name,
-		icon : markerImg,
+		icon : cameraIcon,
 		animation : google.maps.Animation.DROP
 	});
 
 	markersArray.push(marker);
 	google.maps.event.addListener(marker, 'click', function() {
+        if (selectedMarker) {
+            selectedMarker.setIcon(cameraIcon);
+        }
+        selectedMarker = marker;
+        marker.setIcon(redCameraIcon);
 		createInfo(photo.name, photo.created_at, photo.url_s, photo.username);
 	});
 }
