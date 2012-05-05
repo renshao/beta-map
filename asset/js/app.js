@@ -17,9 +17,9 @@ function setupEvents() {
 		}
 	}, 1000);
 
-	google.maps.event.addListener(searchMap, 'zoom_changed', function() {
-		$("#zoom_level").get(0).innerHTML = map.getZoom();
-	});
+//	google.maps.event.addListener(searchMap, 'zoom_changed', function() {
+//		$("#zoom_level").get(0).innerHTML = map.getZoom();
+//	});
 
 	google.maps.event.addListener(searchMap, 'center_changed', centerChanged);
 }
