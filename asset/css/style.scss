@@ -69,13 +69,13 @@ div.right {
 
 #searchPanel {
     @include panel;
-    width: 330px;
-    top: 50px;
+    width: 240px;
+    top: 60px;
 }
 
 #locationPanel {
     @include panel;
-    width: 330px;
+    width: 240px;
     top: 135px;
 }
 
@@ -104,8 +104,9 @@ div.right {
 }
 
 #keyword {
-    width: 250px;
-    font-size: 1.1em;
+    width: 15em;
 }
 
-
+#address {
+    width: 15em;
+}
