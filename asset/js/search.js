@@ -112,6 +112,11 @@ function calcMarkerSize(photo) {
 	}
 }
 
+
+function viewLightbox() {
+   Galleria.get(0).openLightbox();
+}
+
 function createInfo(title, image, username) {
     $('#infoTitle p').remove();
     $('<p>'+title+'</p>').appendTo('#infoTitle');
