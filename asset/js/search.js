@@ -56,7 +56,7 @@ $(document).ready(function() {
 });
 
 function loadPhotos() {
-	var distance = 5//getDistance();
+	var distance = 5;
     var galleriaImages = [];
     var galleria = Galleria.get(0);
     

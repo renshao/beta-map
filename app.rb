@@ -58,16 +58,15 @@ class App < Sinatra::Base
     result = getInstagramPhotos()
     result.to_json
   end
-  
+
   get '/most_popular' do
     content_type :json
     
     instagrams = Instagram.media_popular
     instagrams.delete_if { |photo| photo.location.nil? } 
     puts instagrams.count
-    instagrams.collect do |photo| 
-      caption = photo.caption ? photo.caption.text : ""
-      Photo.new(caption, photo.location.latitude, photo.location.longitude, photo.images.standard_resolution.url, photo.images.standard_resolution.url, photo.user.full_name)
+    instagrams.collect do |photo|
+      extract_photo_info(photo)
     end.to_json
   end
   
@@ -106,8 +105,20 @@ class App < Sinatra::Base
   def convertInstagramPhotosToPhotos(instagrams)
     instagram_photos = instagrams.data.collect do |photo|
       caption = photo.caption ? photo.caption.text : ""
-      Photo.new(caption, photo.location.latitude, photo.location.longitude, photo.images.standard_resolution.url, photo.images.standard_resolution.url, photo.user.full_name)
+      extract_photo_info(photo)
     end
+  end
+
+  def extract_photo_info(photo)
+    created_time = Time.at(photo.created_time.to_i)
+    caption = photo.caption ? photo.caption.text : ""
+    Photo.new(caption,
+              photo.location.latitude,
+              photo.location.longitude,
+              photo.images.standard_resolution.url,
+              photo.images.standard_resolution.url,
+              photo.user.full_name,
+              created_time)
   end
 
   def populate_search_params
