@@ -6,8 +6,18 @@
 		<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>-->
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyDDl0u4l76xuStrTo9PJbCurMXMi23kEjk"></script>
 		<%= js :application %>
+
+        <script src="/galleria/galleria-1.2.7.min.js"></script>
+
+        <style>
+
+            /* This rule is read by Galleria to define the gallery height: */
+            #galleria{height:320px}
+
+        </style>
 	</head>
 	<body>
+        <div id="galleria" class="invisible"/>
         <div id="mapsContainer">
             <div class="mapOut">
                 <div id="realtimeMapCanvas" class="map left"></div>
