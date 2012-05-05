@@ -33,7 +33,7 @@ BetaMap.PhotoQueue.prototype.consume = function() {
 var photoQueue = new BetaMap.PhotoQueue();
 
 $(document).ready(function() {
-    $('.map').height($(document).height() - 100);
+    $('.map').height($(document).height() - 60);
 	var sydney = new google.maps.LatLng(0, 151.207731);
 
 	var myOptions = {
@@ -44,9 +44,9 @@ $(document).ready(function() {
 	};
 	realtimeMap = new google.maps.Map($("#realtimeMapCanvas").get(0), myOptions);
 
-    setInterval("photoQueue.consume()", 1000);
+    //setInterval("photoQueue.consume()", 1000);
 
-    setInterval(getRealtimePhotos, FETCH_INTERVAL);
+    //setInterval(getRealtimePhotos, FETCH_INTERVAL);
 });
 
 

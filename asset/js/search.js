@@ -118,26 +118,20 @@ function viewLightbox() {
 }
 
 function createInfo(title, created_at, image, username) {
-    $('#infoCreatedAt p').remove();
-    $('<p>'+created_at+'</p>').appendTo('#infoCreatedAt');
+    $('#infoCreatedAt').empty().text(created_at);
 
-    $('#infoTitle p').remove();
-    $('<p>'+title+'</p>').appendTo('#infoTitle');
+    $('#infoTitle').empty().text(title);
 
-//    $('#infoImage').hide()
+    $('#infoImage').attr('src', image);
+    //    $('#infoImage').show()
 
-    $('#infoImage').attr('src', image)
-//    $('#infoImage').show()
-
-
-    if(username!=null) {
+    if (username) {
         $('#userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
-        $('#userPhoto').text ("photo for " + username);
-
-        $('#userPhoto').show()
+        $('#username').text(username);
+        $('#userPhoto').show();
     } else {
         $('#userPhoto').attr('href', 'photo/' );
-        $('#userPhoto').hide()
+        $('#userPhoto').hide();
     }
     $('#infoPanel').show();
 }

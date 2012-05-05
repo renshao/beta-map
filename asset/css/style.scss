@@ -59,48 +59,67 @@ div.right {
 }
 
 @mixin panel {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.78);
+    border-radius: 4px;
     right: 50px;
     position: absolute;
-    padding: 10px;
+    padding: 14px;
     color: white;
+    width: 320px;
+
+    input {
+        height: 20px;
+    }
 }
 
 #searchPanel {
     @include panel;
-    width: 240px;
-    top: 60px;
+    top: 65px;
 }
 
 #locationPanel {
     @include panel;
-    width: 240px;
-    top: 135px;
+    top: 123px;
 }
 
 #infoPanel {
     @include panel;
-    top: 220px;
+    top: 191px;
     bottom: 80px;
-    width: 330px;
-    min-height: 320px;
+    min-height: 350px;
     display: none;
     font-size: 0.9em;
+    color: #8a8b8c;
 }
 
-#infoPanel a {
- color:white;
+#infoCreatedAt {
+    margin-bottom: 5px;
+}
+#userPhoto {
+    margin-bottom: 15px;
+}
+#username {
+    font-weight: bold;
 }
 
-#infoPanel .mediumImage {
-  width: 320px;
-  height: 320px;
+#imageContainer {
+    margin-bottom: 15px;
 }
 
-#infoImage{
-	width: 320px;
-  height: 320px
+#infoImage {
+  width: 300px;
+  height: 300px;
+  border: 9px #cccccc solid;
+}
+
+#viewLightbox {
+    display: inline-block;
+    background-color: #191919;
+    padding: 10px 15px;
+    border-radius: 27px;
+    position: relative;
+    top: 20px;
+    cursor: pointer;
 }
 
 #keyword {
