@@ -45,6 +45,9 @@ $(document).ready(function() {
 
 	autocomplete.bindTo('bounds', searchMap);
 
+    Galleria.loadTheme('/galleria/themes/classic/galleria.classic.min.js');
+    Galleria.run('#galleria');
+
 	google.maps.event.addListener(autocomplete, 'place_changed', function() {
 		loadPhotos();
 	});
