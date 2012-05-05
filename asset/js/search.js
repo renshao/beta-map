@@ -54,7 +54,9 @@ $(document).ready(function() {
 
 function loadPhotos() {
 	var distance = 5//getDistance();
-
+    var galleriaImages = [];
+    var galleria = Galleria.get(0);
+    
 	$.ajax({
 		url : '/photos',
 		data : {
@@ -64,10 +66,14 @@ function loadPhotos() {
 			accuracy : distance
 		},
 		success : function(photos) {
-			deleteOverlays();
-			$.each(photos, function(index, photo) {
-				addMarker(photo);
-			});
+            deleteOverlays();
+            galleria.splice(0, 100); // delete photos in galleria
+            $.each(photos, function(index, photo) {
+                galleriaImages.push({image: photo.url_s});
+                addMarker(photo);
+            });
+
+            galleria.push.apply(galleria, galleriaImages)
 		}
 	});
 }
@@ -102,3 +108,9 @@ function calcMarkerSize(photo) {
 		};
 	}
 }
+
+
+function viewLightbox() {
+   Galleria.get(0).openLightbox();
+}
+

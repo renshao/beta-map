@@ -17,7 +17,12 @@
         </style>
 	</head>
 	<body>
-        <div id="galleria" class="invisible"/>
+        <div id="galleria" style="display:none;">
+            <!-- put temporary image in cause I'm confused!!! -->
+                <img data-title="Locomotives Roundhouse"
+                     data-description="Steam locomotives of the Chicago &amp; North Western Railway."
+                     src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Locomotives-Roundhouse2.jpg/100px-Locomotives-Roundhouse2.jpg">
+        </div>
         <div id="mapsContainer">
             <div class="mapOut">
                 <div id="realtimeMapCanvas" class="map left"></div>
@@ -49,9 +54,12 @@
                     <div id="infoTitle"></div>
                     <div class='mediumImage'><img id="infoImage"/>
                 </div>
-        <div><a id="userPhoto" href="photo/{username}"></a></div>
-
-        </div>
+            <div>
+                <a id="userPhoto" href="photo/{username}"></a>
+            </div>
+            <div>
+                <a id="viewLightbox" onclick="viewLightbox();">View all images</a>
+            </div>
 
             <div style="clear: both; margin-top: 10px;"></div>
         </div>
