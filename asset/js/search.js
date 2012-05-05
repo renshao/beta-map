@@ -120,7 +120,11 @@ function viewLightbox() {
 function createInfo(title, image, username) {
     $('#infoTitle p').remove();
     $('<p>'+title+'</p>').appendTo('#infoTitle');
+//    $('#infoImage').hide()
+
     $('#infoImage').attr('src', image)
+//    $('#infoImage').show()
+
 
     if(username!=null) {
         $('#userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
