@@ -2,6 +2,25 @@ var geocoder;
 
 $(document).ready(function() {
 	geocoder = new google.maps.Geocoder();
+
+    $(document).keydown(function(e){
+        if (e.keyCode == 37/*left*/) { 
+            switchView('realtime');
+            return false;
+        }else if (e.keyCode == 39/*right*/) {
+            switchView('search');
+            return false;
+        }
+    });
+
+    $('#toSearch, #toRealtime').click(function(){
+        switchView($(this).attr('view'));
+    });
+
+    $('input').keydown(function(e){
+        e.stopPropagation();
+        return true;
+    });
 });
 
 function geocode() {
@@ -85,3 +104,12 @@ function createInfo(title, image, username) {
 
 
 
+
+function switchView(view) {
+    if (view == 'realtime') { 
+        $('.mapOut').css('left', 0);
+    }else if (view == 'search') {
+        var offset = $('.mapOut').width();
+        $('.mapOut').css('left', -offset);
+    }
+}
