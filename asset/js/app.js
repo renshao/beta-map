@@ -3,7 +3,7 @@ var centerChangedLast;
 var reverseGeocodedLast;
 var currentReverseGeocodeResponse;
 
-$(document).ready(function(){
+$(document).ready(function() {
 	geocoder = new google.maps.Geocoder();
 });
 
@@ -11,7 +11,7 @@ function setupEvents() {
 	reverseGeocodedLast = new Date();
 	centerChangedLast = new Date();
 
-// not sure whether the following setInterval is required or not...
+	// not sure whether the following setInterval is required or not...
 	setInterval(function() {
 		if((new Date()).getSeconds() - centerChangedLast.getSeconds() > 1) {
 			if(reverseGeocodedLast.getTime() < centerChangedLast.getTime())
@@ -55,7 +55,6 @@ function geocodeResult(results, status) {
 	}
 }
 
-
 function addListenerToInfoWindow(marker, infoWindow) {
 	google.maps.event.addListener(marker, 'click', function() {
 		infoWindow.open(searchMap, marker);
@@ -69,7 +68,6 @@ function animateMarkerInDropStyle(marker) {
 		marker.setAnimation(google.maps.Animation.DROP);
 	}
 };
-
 
 function getDistance() {
 	bounds = searchMap.getBounds();
@@ -87,38 +85,35 @@ function getDistance() {
 	var lon2 = ne.lng() / 57.2958;
 
 	// distance = circle radius from center to Northeast corner of bounds
-	var dis = r * Math.acos(Math.sin(lat1) * Math.sin(lat2) +
-	  Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
+	var dis = r * Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
 
 	return dis;
 }
 
 // Deletes all markers in the array by removing references to them
 function deleteOverlays() {
-  if (markersArray) {
-    for (i in markersArray) {
-      markersArray[i].setMap(null);
-    }
-    markersArray.length = 0;
-  }
+	if(markersArray) {
+		for(i in markersArray) {
+			markersArray[i].setMap(null);
+		}
+		markersArray.length = 0;
+	}
 }
 
 function createInfo(title, image, username) {
-    $('#infoTitle p').remove();
-    $('<p>'+title+'</p>').appendTo('#infoTitle');
-    $('#infoImage').attr('src', image)
+	$('#infoTitle p').remove();
+	$('<p>' + title + '</p>').appendTo('#infoTitle');
+	$('#infoImage').attr('src', image)
 
-    if(username!=null) {
-        $('#userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
-        $('#userPhoto').text ("photo for " + username);
+	if(username != null) {
+		$('#userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
+		$('#userPhoto').text("photo for " + username);
 
-        $('#userPhoto').show()
-    } else {
-        $('#userPhoto').attr('href', 'photo/' );
-        $('#userPhoto').hide()
-    }
-    $('#infoPanel').show();
+		$('#userPhoto').show()
+	} else {
+		$('#userPhoto').attr('href', 'photo/');
+		$('#userPhoto').hide()
+	}
+	$('#infoPanel').show();
 }
-
-
 
