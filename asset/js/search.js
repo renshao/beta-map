@@ -112,8 +112,19 @@ function calcMarkerSize(photo) {
 	}
 }
 
+function createInfo(title, image, username) {
+    $('#infoTitle p').remove();
+    $('<p>'+title+'</p>').appendTo('#infoTitle');
+    $('#infoImage').attr('src', image)
 
-function viewLightbox() {
-   Galleria.get(0).openLightbox();
+    if(username!=null) {
+        $('#userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
+        $('#userPhoto').text ("photo for " + username);
+
+        $('#userPhoto').show()
+    } else {
+        $('#userPhoto').attr('href', 'photo/' );
+        $('#userPhoto').hide()
+    }
+    $('#infoPanel').show();
 }
-

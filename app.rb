@@ -51,14 +51,17 @@ class App < Sinatra::Base
       erb :map
   end
 
+  get '/twitter' do
+    query = params[:keyword] ? params[:keyword] : "twitter"
+    twitters = Twitter.search(query, populate_twitter_params)
+    erb :twitters, :locals => {:twitters => twitters}
+  end
 
   get '/photos' do
     content_type :json
     populate_lat_lon
     
-    # flickrs = flickr.photos.search populate_search_params
     result = getInstagramPhotos()
-    puts result
     result.to_json
   end
   
@@ -83,34 +86,20 @@ class App < Sinatra::Base
 
     populate_lat_lon
 
-    #result = getInstagramPhotosByName(params[:username])
-    result = getInstagramPhotosByName('Dave')
+    result = getInstagramUser(params[:name])
     #result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
-    puts "$$$$$$$$$$$$$$$$$ #{result}"
 
     result.to_json
   end
 
-  get '/twitter' do
-    query = params[:keyword] ? params[:keyword] : "twitter"
-    twitters = Twitter.search(query, populate_twitter_params)
-    erb :twitters, :locals => {:twitters => twitters}
-  end
-
-  def getInstagramPhotosByName(name)
+  def getInstagramUser(name)
 
     puts "searching for #{name}"
 
     instagramUsers = Instagram.user_search(name)
+    instagramUser = Instagram.user(instagramUsers.first.id)
 
-
-    puts "found #{name} with #{instagramUsers.size}"
-    puts "Searching for #{instagramUsers.first.username}"
-    instagrams = Instagram.user(instagramUsers.first.username)
-
-    convertInstagramPhotosToPhotos(instagrams)
-
-
+    return result;
   end
 
   def getInstagramPhotos

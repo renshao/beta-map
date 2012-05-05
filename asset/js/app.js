@@ -67,19 +67,21 @@ function deleteOverlays() {
 }
 
 function createInfo(title, image, username) {
-	$('#infoTitle p').remove();
-	$('<p>' + title + '</p>').appendTo('#infoTitle');
-	$('#infoImage').attr('src', image)
+    $('#infoTitle p').remove();
+    $('<p>'+title+'</p>').appendTo('#infoTitle');
+    $('#infoImage').attr('src', image)
 
-	if(username != null) {
-		$('#userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
-		$('#userPhoto').text("photo for " + username);
+    if(username!=null) {
+//        $('#userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
+        $('#userPhoto').text ("photo for " + username);
 
-		$('#userPhoto').show()
-	} else {
-		$('#userPhoto').attr('href', 'photo/');
-		$('#userPhoto').hide()
-	}
-	$('#infoPanel').show();
+        $('#userPhoto').show()
+    } else {
+//        $('#userPhoto').attr('href', 'photo/' );
+        $('#userPhoto').hide()
+    }
+    $('#infoPanel').show();
 }
+
+
 
