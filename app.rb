@@ -110,7 +110,8 @@ class App < Sinatra::Base
   end
 
   def extract_photo_info(photo)
-    created_time = Time.at(photo.created_time.to_i)
+    created_time = Time.at(photo.created_time.to_i).strftime("%I:%M%p %d %b %Y")
+
     caption = photo.caption ? photo.caption.text : ""
     Photo.new(caption,
               photo.location.latitude,
