@@ -23,7 +23,7 @@ var undef,
 
 // internal constants
     VERSION = 1.27,
-    DEBUG = true,
+    DEBUG = false,
     TIMEOUT = 30000,
     DUMMY = false,
     NAV = navigator.userAgent.toLowerCase(),
