@@ -51,20 +51,14 @@ class App < Sinatra::Base
       erb :map
   end
 
+
   get '/photos' do
     content_type :json
     populate_lat_lon
     
     # flickrs = flickr.photos.search populate_search_params
-    instagrams = Instagram.media_search(@lat,@lon, {:count => 50})
-    
-    flickr_photos = []#flickrs.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
-    instagram_photos = instagrams.data.collect do |photo| 
-      caption = photo.caption ? photo.caption.text : ""
-      Photo.new(caption, photo.location.latitude, photo.location.longitude, photo.images.standard_resolution.url, photo.images.standard_resolution.url, photo.user.full_name)
-    end
-    
-    result = flickr_photos + instagram_photos
+    result = getInstagramPhotos()
+    puts result
     result.to_json
   end
   
@@ -87,25 +81,50 @@ class App < Sinatra::Base
   get '/photo/:name' do
     content_type :json
 
-    puts "helloworld #{params[:name]}"
     populate_lat_lon
-     accuracy = params[:accuracy] ? params[:accuracy] : 5
 
-     search_params = {:user_id => params[:name], :lat => @lat, :lon => @lon, :radius => accuracy, :per_page => '20', :extras => "geo, url_s, url_sq, owner_name"}
+    #result = getInstagramPhotosByName(params[:username])
+    result = getInstagramPhotosByName('Dave')
+    #result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
+    puts "$$$$$$$$$$$$$$$$$ #{result}"
 
-     puts "Flickr search params are " + search_params.to_s
-
-    photos = flickr.photos.search search_params
-
-       result = photos.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
-
-      result.to_json
+    result.to_json
   end
 
   get '/twitter' do
     query = params[:keyword] ? params[:keyword] : "twitter"
     twitters = Twitter.search(query, populate_twitter_params)
     erb :twitters, :locals => {:twitters => twitters}
+  end
+
+  def getInstagramPhotosByName(name)
+
+    puts "searching for #{name}"
+
+    instagramUsers = Instagram.user_search(name)
+
+
+    puts "found #{name} with #{instagramUsers.size}"
+    puts "Searching for #{instagramUsers.first.username}"
+    instagrams = Instagram.user(instagramUsers.first.username)
+
+    convertInstagramPhotosToPhotos(instagrams)
+
+
+  end
+
+  def getInstagramPhotos
+    instagrams = Instagram.media_search(@lat, @lon, {:count => 50})
+
+    #flickr_photos = []#flickrs.collect { |photo| Photo.new(photo.title, photo.latitude, photo.longitude, photo.url_s, photo.url_sq, photo.owner) }
+    convertInstagramPhotosToPhotos(instagrams)
+  end
+
+  def convertInstagramPhotosToPhotos(instagrams)
+    instagram_photos = instagrams.data.collect do |photo|
+      caption = photo.caption ? photo.caption.text : ""
+      Photo.new(caption, photo.location.latitude, photo.location.longitude, photo.images.standard_resolution.url, photo.images.standard_resolution.url, photo.user.full_name)
+    end
   end
 
   def populate_search_params

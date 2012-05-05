@@ -143,12 +143,17 @@ function createInfo(title, image, username) {
     $('#infoTitle p').remove();
     $('<p>'+title+'</p>').appendTo('#infoTitle');
     $('#infoImage').attr('src', image)
-    $('#infoPanel').show();
-    $('.userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
 
-//    return new google.maps.InfoWindow({
-//        content: '<div id="content">'+ title + '</div>'
-//    });
+    if(username!=null) {
+        $('#userPhoto').attr('href', 'photo/' + encodeURIComponent(username));
+        $('#userPhoto').text ("photo for " + username);
+
+        $('#userPhoto').show()
+    } else {
+        $('#userPhoto').attr('href', 'photo/' );
+        $('#userPhoto').hide()
+    }
+    $('#infoPanel').show();
 }
 
 
