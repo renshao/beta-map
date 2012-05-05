@@ -1,42 +1,8 @@
 var geocoder;
-var centerChangedLast;
-var reverseGeocodedLast;
-var currentReverseGeocodeResponse;
 
 $(document).ready(function() {
 	geocoder = new google.maps.Geocoder();
 });
-
-function setupEvents() {
-	reverseGeocodedLast = new Date();
-	centerChangedLast = new Date();
-
-	// not sure whether the following setInterval is required or not...
-	setInterval(function() {
-		if((new Date()).getSeconds() - centerChangedLast.getSeconds() > 1) {
-			if(reverseGeocodedLast.getTime() < centerChangedLast.getTime())
-				reverseGeocode();
-		}
-	}, 1000);
-
-	google.maps.event.addListener(searchMap, 'center_changed', centerChanged);
-}
-
-function reverseGeocode() {
-	reverseGeocodedLast = new Date();
-	geocoder.geocode({
-		latLng : searchMap.getCenter()
-	}, reverseGeocodeResult);
-}
-
-function reverseGeocodeResult(results, status) {
-	currentReverseGeocodeResponse = results;
-}
-
-function centerChanged() {
-	centerChangedLast = new Date();
-	currentReverseGeocodeResponse = null;
-}
 
 function geocode() {
 	var address = $("#address").get(0).value;

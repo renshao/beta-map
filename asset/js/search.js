@@ -40,9 +40,6 @@ $(document).ready(function() {
 		return false;
 	});
 
-	setupEvents();
-	centerChanged();
-
 	var input = $("#address").get(0);
 	var autocomplete = new google.maps.places.Autocomplete(input);
 
