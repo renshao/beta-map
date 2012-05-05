@@ -51,12 +51,6 @@ class App < Sinatra::Base
       erb :map
   end
 
-  get '/twitter' do
-    query = params[:keyword] ? params[:keyword] : "twitter"
-    twitters = Twitter.search(query, populate_twitter_params)
-    erb :twitters, :locals => {:twitters => twitters}
-  end
-
   get '/photos' do
     content_type :json
     populate_lat_lon
@@ -122,20 +116,6 @@ class App < Sinatra::Base
     accuracy = params[:accuracy] ? params[:accuracy] : 5
 
     {:text => params[:keyword], :lat => @lat, :lon => @lon, :radius => accuracy, :per_page => '20', :extras => "geo, url_s, url_sq, owner_name"}
-  end
-
-  def populate_twitter_params
-    populate_lat_lon
-
-    geocode = "#{@lat},#{@lon},20km"
-
-    search_params = {:geocode => geocode,
-                     :rpp => 10,
-                     :lang => 'en',
-                     :include_entities => true}
-    puts "Twitter search params are " + search_params.to_s
-
-    return search_params
   end
 
   def populate_lat_lon
