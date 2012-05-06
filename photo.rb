@@ -3,7 +3,7 @@ class Photo
 
   def initialize(options)
     @id = options[:id]
-    @name = options[:name]
+    @name = options[:caption]
     @lat = options[:latitude]
     @lng = options[:longitude]
     @url_s = options[:url_s]
