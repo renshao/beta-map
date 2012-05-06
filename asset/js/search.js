@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 	var myOptions = {
 		center : sydney,
-		zoom : 15,
+		zoom : 12, //15, // changed the zoom to 12 as the weather layer can only be displayed upto zoom level 12.
 		disableDefaultUI : false,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
@@ -60,6 +60,7 @@ $(document).ready(function() {
 	});
 
 	loadPhotos();
+	addWeatherInformation();
 });
 
 function loadPhotos() {
