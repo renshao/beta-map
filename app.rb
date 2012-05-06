@@ -64,7 +64,6 @@ class App < Sinatra::Base
     
     instagrams = Instagram.media_popular
     instagrams.delete_if { |photo| photo.location.nil? } 
-    puts instagrams.count
     instagrams.collect do |photo|
       extract_photo_info(photo)
     end.to_json

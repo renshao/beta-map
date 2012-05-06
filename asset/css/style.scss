@@ -12,6 +12,12 @@ body {
     font-family: Lucida Grande;
 }
 
+.latestPhotoInfo {
+    img {
+        width: 200px;
+    }
+}
+
 #mapsContainer {
     width: 200%;
     height: 100%;

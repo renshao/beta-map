@@ -47,6 +47,7 @@ $(document).ready(function() {
     setInterval("photoQueue.consume()", 3000);
 
     setInterval(getRealtimePhotos, FETCH_INTERVAL);
+    //testInfoWindow();
 });
 
 
@@ -67,9 +68,7 @@ function addRealtimePhotoMarker(photo) {
 		map : realtimeMap,
 		title : photo.name,
 		icon : cameraIcon 
-		//animation : google.maps.Animation.BOUNCE
 	});
-
 
     realtimeMarkers.push(marker);
 	showLastPhoto(marker, photo);
@@ -80,8 +79,23 @@ function showLastPhoto(marker, photo){
         lastInfoWindow.close();
     }
     lastInfoWindow = new google.maps.InfoWindow({
-        content: "<img src='" + photo.url_s + "' width='100px;'/>",
+        content: createInfoWindowContainer(photo),
         position: marker.getPosition()
     });
     lastInfoWindow.open(realtimeMap);
+}
+
+function createInfoWindowContainer(photo) {
+    var $img = $('<img/>').attr('src', photo.url_s);
+    var $div = $('<div></div>').addClass('latestPhotoInfo').append($img);
+    return $div.get(0);
+}
+
+// creates a static info window for css debugging
+function testInfoWindow(){
+    var infoWindow = new google.maps.InfoWindow({
+        content: "<div class='latestPhotoInfo'><img src='http://distilleryimage7.instagram.com/8ae63806970311e1af7612313813f8e8_7.jpg'/></div>",
+        position: new google.maps.LatLng(0, 151)
+    });
+    infoWindow.open(realtimeMap);
 }
