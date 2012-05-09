@@ -6,9 +6,6 @@ require 'sinatra/assetpack'
 require './photo_manager'
 require 'instagram'
 
-FlickRaw.api_key="665020df0e5ace2a2efbd8a6f5ad1f55"
-FlickRaw.shared_secret="d57c75447d843c9b"
-
 class App < Sinatra::Base
 
   set :root, File.dirname(__FILE__)
@@ -36,8 +33,8 @@ class App < Sinatra::Base
   }
   
   Instagram.configure do |config|
-    config.client_id = "ddbe06df91774af98776a3aa31fce89f" 
-    config.access_token = "51500982.ddbe06d.2c0a0ca1189543929599b0cf0c8d121f"
+    config.client_id = ENV["INSTAGRAM_CLIENT_ID"] 
+    config.access_token = ENV["INSTAGRAM_ACCESS_TOKEN"]
   end
 
   get '/' do
