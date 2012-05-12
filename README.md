@@ -1,6 +1,6 @@
 Live URL
 --------
-http://floating-ice-4900.heroku.com
+http://beta-map.heroku.com
 
 Run beta-map locally
 ------------
