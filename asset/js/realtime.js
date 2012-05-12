@@ -44,7 +44,7 @@ $(document).ready(function() {
 	};
 	realtimeMap = new google.maps.Map($("#realtimeMapCanvas").get(0), myOptions);
 
-    setInterval("photoQueue.consume()", 3000);
+    setInterval("photoQueue.consume()", 5000);
 
     setInterval(getRealtimePhotos, FETCH_INTERVAL);
     //testInfoWindow();

@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'erb'
 require 'json'
-require 'flickraw'
 require 'sinatra/assetpack'
 require './photo_manager'
 require 'instagram'
@@ -34,7 +33,6 @@ class App < Sinatra::Base
   
   Instagram.configure do |config|
     config.client_id = ENV["INSTAGRAM_CLIENT_ID"] 
-    config.access_token = ENV["INSTAGRAM_ACCESS_TOKEN"]
   end
 
   get '/' do
